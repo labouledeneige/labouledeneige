@@ -335,11 +335,11 @@ section {
 .form-field textarea {
   width: 100%;
   padding: 0.65rem 0.85rem;
-  border: 1.5px solid var(--color-border);
+  border: 1.5px solid #B7C4CC;
   border-radius: 4px;
   font-family: var(--font-body);
   font-size: 1rem;
-  background: var(--color-bg);
+  background: #FFFFFF;
   color: var(--color-text);
 }
 

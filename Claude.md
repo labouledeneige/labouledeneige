@@ -111,6 +111,13 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
   à droite, plutôt que tout sur une seule ligne avec un séparateur texte. S'empile proprement sur
   mobile grâce à `flex-wrap`. Lien stylé en gris discret (`.footer-credit a`), passe à l'accent
   rouge au survol, pour ne pas concurrencer visuellement la marque de l'association
+- **2026-08-10** : Adrien a repéré que les champs de formulaire (contact, newsletter) étaient
+  presque invisibles depuis le passage au fond jaune, leur fond reprenait `--color-bg` (le même
+  jaune) avec une bordure à peine plus foncée. Contraste vérifié : environ 1,1:1, très en dessous
+  du minimum recommandé de 3:1 pour un élément d'interface. Corrigé : fond blanc `#FFFFFF` et
+  bordure `#B7C4CC` (même teinte que la ligne de séparation du footer) sur `.form-field input` et
+  `.form-field textarea` dans `css/style.css`. À garder en tête pour toute future couleur de fond
+  très claire : vérifier le contraste des champs de formulaire, pas seulement le texte
 
 ## Principes de design — éviter le rendu "généré par IA"
 
