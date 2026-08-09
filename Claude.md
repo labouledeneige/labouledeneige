@@ -7,6 +7,12 @@ Client : Nicole Rossellat, avec son mari Gérald Rossellat-Aguet (comité de l'a
 tous deux signent les rapports annuels). Stack habituelle : HTML/CSS/JS codé à la main
 (pas de CMS, pas de template), hébergement GitHub → Netlify, domaine Infomaniak.
 
+Dépôt Git initialisé localement le 2026-08-09 (`git init`, pas encore poussé sur GitHub, voir
+question "Infrastructure technique" plus bas pour la question du compte propriétaire). `node_modules/`
+et `.claude/` sont dans `.gitignore` (résidus locaux, rien à voir avec le site statique). Habitude
+prise avec Adrien : committer avant un changement visuel qui divise (ex. logo/drapeau), pour
+pouvoir revenir en arrière facilement si le résultat ne plaît pas une fois vu en vrai.
+
 Coordonnées officielles de l'association (confirmées via le rapport annuel 2025) :
 - Adresse : Chemin des Cyprès 10, 1226 Thônex
 - E-mail : nicole.rossellat@starlac.ch
@@ -19,7 +25,12 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
 1. **Page de présentation de l'association** — mission, historique, actions concrètes au Burkina Faso
    - La frise "Notre histoire" renvoie vers une page dédiée (`histoire.html`, point 6) pour le récit complet
 2. **Page newsletter** — inscription (formulaire simple email), éventuellement archive des newsletters passées
-   - Le formulaire capture les inscrits via Netlify Forms (pas de vraie liste de diffusion). Décision : au moment du premier envoi, exporter le CSV des inscrits depuis Netlify et l'importer dans un outil d'e-mailing gratuit (Brevo ou Mailchimp), qui gère la désinscription et l'envoi en masse. Pas d'automatisation "détection de fichier → envoi automatique" : trop d'infrastructure à maintenir pour 2-3 envois par an, et pas d'étape de relecture avant envoi
+   - Le formulaire capture les inscrits via Netlify Forms (pas de vraie liste de diffusion). Décision de base : au moment du premier envoi, exporter le CSV des inscrits depuis Netlify et l'importer dans un outil d'e-mailing gratuit (Brevo ou Mailchimp), qui gère la désinscription et l'envoi en masse. Pas d'automatisation "détection de fichier → envoi automatique" : trop d'infrastructure à maintenir pour 2-3 envois par an, et pas d'étape de relecture avant envoi
+   - **2026-08-10** : option discutée avec Adrien pour supprimer même cette étape d'export manuel :
+     brancher directement le formulaire d'inscription du site sur le formulaire natif de Brevo, pour
+     que les inscrits atterrissent tout de suite dans la liste Brevo, sans passer par Netlify Forms
+     ni export CSV. Pas encore implémenté, en attente que Nicole/Gérald créent leur compte Brevo
+     (voir question "Brevo" dans Infrastructure technique)
    - Formulaires newsletter et contact soumis en AJAX (`js/main.js`) avec message de confirmation affiché à la place du formulaire, sans rechargement de page. Ne fonctionne que sur un vrai déploiement Netlify (le POST est traité par Netlify au build, pas en local)
 3. **Page rapports annuels** — rapports PDF fournis par le client, organisés par année
    - Grille de "cartes-année", du plus récent au plus ancien
@@ -50,11 +61,47 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
   détails graphiques), jamais en aplats
 - **Décision du 2026-08-08** : à la demande de Nicole et Gérald (après test de plusieurs teintes,
   voir `../La Boule de Neige - documents internes/couleurs-fond-comparatif/`), le fond blanc de
-  base est remplacé par un jaune pâle `#FFF9D2`. Le gris clair du header/footer (`#EEF1F3`) et
-  le bleu glacé restent inchangés
-- Palette de travail actuelle (implémentée dans `css/style.css`) : fond `#FFF9D2`, gris très
-  clair `#EEF1F3`, bleu pâle glacé `#7FA8C9`, texte anthracite `#24282B`, rouge Burkina adouci
-  `#C8232E` (CTA), vert Burkina `#009E49` (hover/accents), jaune/or `#FCD116` (touches ponctuelles)
+  base est remplacé par un jaune pâle `#FFF9D2`. Le bleu glacé reste inchangé
+- **2026-08-10** : header et footer utilisaient tous les deux `--color-bg-alt` (`#EEF1F3`), comme
+  les sections alternées au milieu des pages. Adrien a remarqué que le footer et la dernière
+  section avant lui se confondaient (même gris, contiguës). Corrigé en donnant à chacun sa propre
+  teinte : header très clair et aérien `--color-header-bg` (`#F1F4F7`), footer plus soutenu et
+  légèrement bleuté `--color-footer-bg` (`#DCE6EC`, un clin d'oeil discret au dégradé bleu glacé
+  de la page don sans réutiliser le dégradé lui-même). `--color-bg-alt` reste au milieu de page
+  pour les sections alternées, inchangé. Bonus : ça règle aussi le problème de contiguïté, header
+  et footer se détachent maintenant clairement de tout ce qui les entoure
+- Palette de travail actuelle (implémentée dans `css/style.css`) : fond `#FFF9D2`, gris section
+  alternée `#EEF1F3`, header `#F1F4F7`, footer `#DCE6EC`, bleu pâle glacé `#7FA8C9`, texte
+  anthracite `#24282B`, rouge Burkina adouci `#C8232E` (CTA), vert Burkina `#009E49`
+  (hover/accents), jaune/or `#FCD116` (touches ponctuelles)
+
+## Logo animé et drapeau du Burkina Faso
+
+- **2026-08-09** : Nicole et Gérald adorent le logo et ont demandé à le voir plus présent sur la
+  page d'accueil, en plus du header. Idée d'Adrien, implémentée : le flocon apparaît en grand
+  (9rem) centré en tête du hero (entre le header et le titre), avec une animation "boule de neige"
+  au chargement de la page (`@keyframes roll-in-grow` dans `css/style.css`, classe `.hero-emblem`) :
+  il part petit et décalé à gauche, tourne sur lui-même en grandissant, et s'arrête centré à sa
+  taille finale, en écho au nom de l'association. Rotation finale fixée à `720deg` (2 tours pleins)
+  et pas un multiple non-entier, sinon le logo termine tourné (bug rencontré et corrigé : `620deg`
+  laissait le sourire de travers). Timing `2.2s ease-in-out` avec des arrêts intermédiaires dans
+  les keyframes (pas juste 0%/100%) pour que la croissance reste visible sur toute la durée, pas
+  seulement dans les premières 200ms. Respecte `prefers-reduced-motion`. L'ancienne version statique
+  du logo en bas de page a été retirée pour ne pas répéter le même élément deux fois
+- **2026-08-09** : le drapeau du Burkina Faso a aussi été demandé explicitement par les clients.
+  Petite tension avec la règle posée plus haut ("ne pas utiliser le drapeau en aplat, trop
+  institutionnel/politique pour une petite association") : c'est leur demande directe, donc pas
+  bloqué, mais implémenté à toute petite échelle plutôt qu'en bannière, pour rester dans l'esprit
+  sobre du site. Un SVG fait main (`assets/img/burkina-faso.svg`, classe `.flag-icon`) inséré dans
+  le texte d'intro de l'accueil après "Burkina Faso", et dans le footer de toutes les pages à côté
+  du copyright. Piège rencontré : le reset CSS global (`img { display: block; }`) faisait sauter le
+  drapeau à la ligne ; corrigé avec `display: inline-block` sur `.flag-icon` spécifiquement
+- **2026-08-10** : signature du développeur ajoutée dans le footer des 6 pages ("Site développé
+  par Arzabe Studio", lien vers https://arzabe-studio.ch, nouvel onglet). `.footer-bottom` passé
+  en flexbox (`justify-content: space-between`) pour mettre le copyright à gauche et la signature
+  à droite, plutôt que tout sur une seule ligne avec un séparateur texte. S'empile proprement sur
+  mobile grâce à `flex-wrap`. Lien stylé en gris discret (`.footer-credit a`), passe à l'accent
+  rouge au survol, pour ne pas concurrencer visuellement la marque de l'association
 
 ## Principes de design — éviter le rendu "généré par IA"
 
@@ -145,6 +192,11 @@ Réunion prévue le jeudi 2026-08-06.
 - **Adresse e-mail dédiée** : veulent-ils une adresse du type contact@laboudedeneige.ch (via
   Infomaniak) plutôt que de publier l'adresse personnelle nicole.rossellat@starlac.ch partout
   sur le site ? Répond en partie à la question du numéro de domicile ci-dessus
+- **Brevo (ou Mailchimp)** : même logique que GitHub/Netlify, le compte doit appartenir à
+  Nicole/Gérald, pas à Adrien. Ont-ils une préférence entre les deux outils ? Une fois le compte
+  créé de leur côté, il suffit qu'ils transmettent à Adrien le code d'intégration du formulaire
+  (ou la clé API) pour brancher directement le formulaire newsletter du site dessus : les
+  inscrits arrivent alors automatiquement dans leur liste, sans export CSV manuel à chaque envoi
 - **Notifications des formulaires** : qui doit recevoir un e-mail à chaque nouvelle inscription
   newsletter ou message de contact reçu via Netlify Forms ? Nicole, Gérald, les deux ?
 - **Mentions légales / confidentialité** : le site collecte des e-mails via les formulaires,
@@ -153,10 +205,11 @@ Réunion prévue le jeudi 2026-08-06.
 
 ## Notes diverses
 
-- Logo officiel reçu et intégré (`assets/img/logo.png`, header + favicon sur les 6 pages).
-  Le style du logo (trait noir, sourire, un peu enfantin) tranche avec l'esprit "sobre, pas
-  généré par IA" du moodboard : à garder en tête si Nicole propose une version retravaillée
-  plus tard
+- Logo officiel reçu et intégré (`assets/img/logo.png`, header + favicon sur les 6 pages, et
+  version animée en grand sur l'accueil, voir section dédiée plus haut). Le style du logo (trait
+  noir, sourire, un peu enfantin) tranchait avec l'esprit "sobre, pas généré par IA" du moodboard
+  de départ, mais Nicole et Gérald l'adorent tel quel : ce n'est plus un point d'inquiétude, garder
+  ce style tel quel sauf avis contraire de leur part
 - Réutiliser l'infra existante : GitHub → Netlify, domaine via Infomaniak, Netlify Forms pour
   le formulaire de contact
 - **2026-08-08** : Adrien a transmis `a Naissance de notre Association et buts.docx`, le texte

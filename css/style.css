@@ -9,6 +9,8 @@
 :root {
   --color-bg: #FFF9D2;
   --color-bg-alt: #EEF1F3;
+  --color-header-bg: #F1F4F7;
+  --color-footer-bg: #DCE6EC;
   --color-accent-cold: #7FA8C9;
   --color-accent-cold-light: #E4EDF3;
   --color-text: #24282B;
@@ -93,7 +95,7 @@ img {
 
 .site-header {
   border-bottom: 1px solid var(--color-border);
-  background: var(--color-bg-alt);
+  background: var(--color-header-bg);
 }
 
 .site-header .container {
@@ -268,7 +270,7 @@ section {
 
 .site-footer {
   border-top: 1px solid var(--color-border);
-  background: var(--color-bg-alt);
+  background: var(--color-footer-bg);
   padding: var(--space-5) 0 var(--space-3);
   font-size: 0.95rem;
   color: var(--color-text-muted);
@@ -297,9 +299,23 @@ section {
 }
 
 .footer-bottom {
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid #B7C4CC;
   padding-top: var(--space-2);
   font-size: 0.85rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.footer-credit a {
+  color: var(--color-text-muted);
+  text-decoration: underline;
+}
+
+.footer-credit a:hover {
+  color: var(--color-accent-warm);
 }
 
 /* ---------- Formulaires ---------- */
