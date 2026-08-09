@@ -405,6 +405,54 @@ section {
   height: 1.1rem;
 }
 
+/* ---------- Emblème (logo en grand, en tête du hero) ---------- */
+
+.hero-emblem-wrap {
+  text-align: center;
+}
+
+.hero-emblem {
+  width: 9rem;
+  height: 9rem;
+  margin: 0 auto;
+  animation: roll-in-grow 2.2s ease-in-out both;
+}
+
+@keyframes roll-in-grow {
+  0% {
+    transform: translateX(-22rem) scale(0.22) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-7rem) scale(0.55) rotate(360deg);
+  }
+  100% {
+    transform: translateX(0) scale(1) rotate(720deg);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-emblem {
+    animation: none;
+  }
+}
+
+/* ---------- Petit drapeau inline (Burkina Faso) ---------- */
+
+.flag-icon {
+  display: inline-block;
+  height: 0.85em;
+  width: auto;
+  vertical-align: middle;
+  margin-left: 0.35em;
+  border: 1px solid var(--color-border);
+  border-radius: 1px;
+}
+
 /* ---------- Page association : hero et historique ---------- */
 
 .hero {
@@ -412,7 +460,7 @@ section {
   grid-template-columns: 1.1fr 0.9fr;
   gap: var(--space-5);
   align-items: center;
-  padding-top: var(--space-6);
+  padding-top: var(--space-3);
 }
 
 .hero .placeholder-visual {
