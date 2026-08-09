@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rapports annuels — La Boule de Neige</title>
+  <meta name="description" content="Consultez les rapports annuels de l'association La Boule de Neige, année par année.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/png" href="assets/img/logo.png">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="assets/img/logo.png" alt="Logo La Boule de Neige">
+        <span class="logo-text">La Boule de Neige</span>
+      </a>
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">L'association</a></li>
+          <li><a href="newsletter.html">Newsletter</a></li>
+          <li><a href="rapports.html" aria-current="page">Rapports annuels</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="don.html">Faire un don</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section>
+      <div class="container">
+        <p class="eyebrow">Transparence</p>
+        <h1>Rapports annuels</h1>
+        <p>Chaque année, nous publions un rapport détaillant les projets menés, les fonds reçus et leur utilisation. Cliquez sur une année pour ouvrir le rapport correspondant en PDF.</p>
+
+        <div class="rapports-grid">
+          <!-- Grille générée dynamiquement par js/rapports.js à partir de la liste des rapports.
+               Les liens pointent vers assets/rapports/ : PDF réels à déposer dès réception. -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>La Boule de Neige</h4>
+          <p>Chemin des Cyprès 10<br>1226 Thônex</p>
+        </div>
+        <div>
+          <h4>Navigation</h4>
+          <a href="index.html">L'association</a><br>
+          <a href="newsletter.html">Newsletter</a><br>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div>
+          <h4>Nous soutenir</h4>
+          <a href="don.html">Faire un don</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; <span id="year"></span> La Boule de Neige
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" aria-label="Retour en haut de page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="19" x2="12" y2="5"></line>
+      <polyline points="6 11 12 5 18 11"></polyline>
+    </svg>
+  </button>
+
+  <script src="js/main.js"></script>
+  <script src="js/rapports.js"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

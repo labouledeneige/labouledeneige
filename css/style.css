@@ -1,0 +1,556 @@
+/* ===================================================================
+   La Boule de Neige — feuille de style commune
+   Palette et typo provisoires, à recalibrer dès réception du logo
+   (voir Claude.md, section Palette de couleurs)
+   =================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Karla:wght@400;500;700&display=swap');
+
+:root {
+  --color-bg: #FFF9D2;
+  --color-bg-alt: #EEF1F3;
+  --color-accent-cold: #7FA8C9;
+  --color-accent-cold-light: #E4EDF3;
+  --color-text: #24282B;
+  --color-text-muted: #5B6167;
+  --color-accent-warm: #C8232E;
+  --color-accent-warm-hover: #A81D27;
+  --color-accent-green: #009E49;
+  --color-accent-gold: #FCD116;
+  --color-border: #DCE2E6;
+  --color-success-bg: #E6F4EC;
+  --color-error-bg: #FBEAEA;
+
+  --font-heading: 'Fraunces', 'Georgia', serif;
+  --font-body: 'Karla', 'Segoe UI', sans-serif;
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 3rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+
+  --max-width: 72rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.6;
+  font-size: 1.0625rem;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  line-height: 1.2;
+  margin: 0 0 var(--space-2);
+  color: var(--color-text);
+}
+
+h1 { font-size: clamp(2.25rem, 4vw, 3.25rem); font-weight: 600; }
+h2 { font-size: clamp(1.75rem, 3vw, 2.25rem); }
+h3 { font-size: 1.3rem; }
+
+p {
+  margin: 0 0 var(--space-2);
+}
+
+a {
+  color: var(--color-accent-warm);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  color: var(--color-accent-warm-hover);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-3);
+}
+
+/* ---------- En-tête / navigation ---------- */
+
+.site-header {
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-alt);
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-2);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.logo img {
+  width: 2.75rem;
+  height: 2.75rem;
+  object-fit: contain;
+}
+
+.logo-text {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--color-text);
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-1);
+}
+
+.nav-toggle span {
+  width: 24px;
+  height: 2px;
+  background: var(--color-text);
+  display: block;
+}
+
+.main-nav ul {
+  list-style: none;
+  display: flex;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+}
+
+.main-nav a {
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding-bottom: 3px;
+  border-bottom: 2px solid transparent;
+}
+
+.main-nav a:hover,
+.main-nav a[aria-current="page"] {
+  border-bottom-color: var(--color-accent-warm);
+  color: var(--color-text);
+}
+
+@media (max-width: 720px) {
+  .nav-toggle {
+    display: flex;
+  }
+
+  .main-nav {
+    display: none;
+    width: 100%;
+    order: 3;
+  }
+
+  .main-nav.is-open {
+    display: block;
+  }
+
+  .main-nav ul {
+    flex-direction: column;
+    gap: 0;
+    padding-bottom: var(--space-2);
+  }
+
+  .main-nav a {
+    display: block;
+    padding: var(--space-1) 0;
+  }
+
+  .site-header .container {
+    flex-wrap: wrap;
+  }
+}
+
+/* ---------- Boutons ---------- */
+
+.btn {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.75rem 1.75rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  background: var(--color-accent-warm);
+  color: #FFFFFF;
+  transition: background-color 0.15s ease;
+}
+
+.btn:hover {
+  background: var(--color-accent-warm-hover);
+  color: #FFFFFF;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-text);
+  border: 1.5px solid var(--color-text);
+}
+
+.btn-outline:hover {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+/* ---------- Placeholder visuels (en attendant les fichiers du client) ---------- */
+
+.placeholder-visual {
+  border: 1.5px dashed var(--color-accent-cold);
+  background: var(--color-accent-cold-light);
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.9rem;
+  padding: var(--space-3);
+  min-height: 12rem;
+  border-radius: 4px;
+}
+
+/* ---------- Sections génériques ---------- */
+
+section {
+  padding: var(--space-6) 0;
+}
+
+.section-alt {
+  background: var(--color-bg-alt);
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-accent-warm);
+  margin-bottom: var(--space-1);
+}
+
+/* ---------- Pied de page ---------- */
+
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg-alt);
+  padding: var(--space-5) 0 var(--space-3);
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.footer-grid h4 {
+  color: var(--color-text);
+  font-size: 1rem;
+  margin-bottom: var(--space-1);
+}
+
+.footer-grid a {
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+
+.footer-grid a:hover {
+  color: var(--color-accent-warm);
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-2);
+  font-size: 0.85rem;
+}
+
+/* ---------- Formulaires ---------- */
+
+.form-field {
+  margin-bottom: var(--space-3);
+}
+
+.form-field label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+  font-size: 0.95rem;
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--color-accent-cold);
+}
+
+/* champ honeypot Netlify, invisible pour les humains */
+.form-honeypot {
+  position: absolute;
+  left: -9999px;
+}
+
+.form-note {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+.form-success,
+.form-error {
+  padding: var(--space-3);
+  border-radius: 4px;
+  border: 1.5px solid;
+}
+
+.form-success {
+  border-color: var(--color-accent-green);
+  background: var(--color-success-bg);
+}
+
+.form-error {
+  border-color: var(--color-accent-warm);
+  background: var(--color-error-bg);
+}
+
+.form-success p,
+.form-error p {
+  margin: 0;
+}
+
+/* ---------- Bouton retour en haut ---------- */
+
+.back-to-top {
+  position: fixed;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(36, 40, 43, 0.12);
+  opacity: 0;
+  transform: translateY(0.5rem);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.15s ease;
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.back-to-top:hover {
+  border-color: var(--color-accent-warm);
+}
+
+.back-to-top svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+/* ---------- Page association : hero et historique ---------- */
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--space-5);
+  align-items: center;
+  padding-top: var(--space-6);
+}
+
+.hero .placeholder-visual {
+  min-height: 20rem;
+}
+
+@media (max-width: 800px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 2px solid var(--color-accent-cold);
+  max-width: 42rem;
+}
+
+.timeline li {
+  position: relative;
+  padding: 0 0 var(--space-4) var(--space-4);
+}
+
+.timeline li::before {
+  content: "";
+  position: absolute;
+  left: -7px;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-accent-warm);
+}
+
+.timeline .year {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+/* ---------- Page rapports annuels ---------- */
+
+.rapports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-3);
+}
+
+.rapport-card {
+  border: 1.5px solid var(--color-border);
+  border-radius: 4px;
+  padding: var(--space-3);
+  text-decoration: none;
+  color: var(--color-text);
+  background: var(--color-bg);
+  transition: border-color 0.15s ease;
+}
+
+.rapport-card:hover {
+  border-color: var(--color-accent-warm);
+  color: var(--color-text);
+}
+
+.rapport-card .year {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 600;
+  display: block;
+}
+
+.rapport-card .label {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+/* ---------- Page newsletter ---------- */
+
+.split-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .split-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Page contact ---------- */
+
+.contact-info {
+  background: var(--color-bg-alt);
+  border-radius: 4px;
+  padding: var(--space-4);
+}
+
+.contact-info h4 {
+  margin-bottom: 0.25rem;
+}
+
+.contact-info p {
+  margin-bottom: var(--space-3);
+}
+
+/* ---------- Page don ---------- */
+
+.don-panel {
+  background: linear-gradient(160deg, var(--color-bg) 0%, var(--color-accent-cold-light) 100%);
+  border-radius: 4px;
+  padding: var(--space-5);
+  text-align: center;
+}
+
+.don-panel .placeholder-visual {
+  max-width: 16rem;
+  margin: 0 auto var(--space-3);
+  min-height: 16rem;
+}
+
+.qr-image {
+  width: 14rem;
+  margin: 0 auto var(--space-3);
+  border: 1.5px solid var(--color-border);
+  border-radius: 4px;
+}
+
+.iban-block {
+  font-family: 'Courier New', monospace;
+  background: var(--color-bg);
+  border: 1.5px solid var(--color-border);
+  border-radius: 4px;
+  padding: var(--space-2) var(--space-3);
+  display: inline-block;
+  margin-top: var(--space-2);
+}

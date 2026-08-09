@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faire un don — La Boule de Neige</title>
+  <meta name="description" content="Soutenez les projets de La Boule de Neige au Burkina Faso par un don, via QR code ou virement bancaire.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/png" href="assets/img/logo.png">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="assets/img/logo.png" alt="Logo La Boule de Neige">
+        <span class="logo-text">La Boule de Neige</span>
+      </a>
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">L'association</a></li>
+          <li><a href="newsletter.html">Newsletter</a></li>
+          <li><a href="rapports.html">Rapports annuels</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="don.html" aria-current="page">Faire un don</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section>
+      <div class="container">
+        <p class="eyebrow">Nous soutenir</p>
+        <h1>Chaque don compte, à sa mesure</h1>
+        <p>Nos projets au Burkina Faso avancent grâce aux dons de nos membres et donateurs. Scannez le QR code ci-dessous ou utilisez nos coordonnées bancaires pour faire un don, ponctuel ou régulier.</p>
+
+        <div class="don-panel">
+          <img src="assets/img/qr-don.png" alt="QR code de paiement pour un don à l'association La Boule de Neige" class="qr-image">
+          <p>Ou par virement bancaire :</p>
+          <div class="iban-block">
+            IBAN : CH05 0900 0000 1706 5225 3<br>
+            Titulaire : Association La Boule de Neige<br>
+            Chemin des Cyprès 10, 1226 Thônex
+          </div>
+          <p class="form-note">L'association est reconnue d'utilité publique : vos dons bénéficient d'une exonération d'impôt.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-alt">
+      <div class="container">
+        <p class="eyebrow">Où va votre don</p>
+        <h2>Une utilisation suivie de près</h2>
+        <p>En 2025, l'association a reçu 87'908 francs de dons et en a redistribué 84'716 sous forme de projets : soutien agricole, salaires des professeurs du collège de Kompienga, scolarisation d'enfants, école primaire de Ouagadougou, école de couture. Les frais de fonctionnement (banque, CCP) représentent 0,36% des dépenses : la quasi-totalité de votre don part directement sur le terrain.</p>
+        <a href="rapports.html">Consulter les rapports annuels</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>La Boule de Neige</h4>
+          <p>Chemin des Cyprès 10<br>1226 Thônex</p>
+        </div>
+        <div>
+          <h4>Navigation</h4>
+          <a href="index.html">L'association</a><br>
+          <a href="newsletter.html">Newsletter</a><br>
+          <a href="rapports.html">Rapports annuels</a>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <a href="contact.html">Nous écrire</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; <span id="year"></span> La Boule de Neige
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" aria-label="Retour en haut de page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="19" x2="12" y2="5"></line>
+      <polyline points="6 11 12 5 18 11"></polyline>
+    </svg>
+  </button>
+
+  <script src="js/main.js"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
