@@ -483,6 +483,14 @@ section {
   min-height: 20rem;
 }
 
+.hero-photo-img {
+  width: 100%;
+  min-height: 20rem;
+  max-height: 28rem;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
 @media (max-width: 800px) {
   .hero {
     grid-template-columns: 1fr;

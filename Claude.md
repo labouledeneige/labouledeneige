@@ -24,6 +24,15 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
 
 1. **Page de présentation de l'association** — mission, historique, actions concrètes au Burkina Faso
    - La frise "Notre histoire" renvoie vers une page dédiée (`histoire.html`, point 6) pour le récit complet
+   - **2026-08-10** : photo du hero rotative, une par jour. Idée d'Adrien pour rendre le site
+     vivant sans imposer un quota de photos au client. Les photos vont dans
+     `assets/img/photos-accueil/`, la liste des fichiers actuellement disponibles est dans
+     `js/photos-accueil.js` (même principe que `js/rapports.js` : déposer le fichier, ajouter une
+     ligne, terminé, sans quantité minimum ou maximum). La photo affichée est choisie par
+     `jour de l'année % nombre de photos`, pas par jour du mois : pas de gestion des mois à 28/30/31
+     jours, juste un tas continu de photos qui tourne en boucle. Tant que le tableau est vide, le
+     `placeholder-visual` d'origine reste affiché tel quel, donc rien ne casse en attendant les
+     premières photos (Adrien doit en demander à Nicole/Gérald, même une ou deux pour commencer)
 2. **Page newsletter** — inscription (formulaire simple email), éventuellement archive des newsletters passées
    - Le formulaire capture les inscrits via Netlify Forms (pas de vraie liste de diffusion). Décision de base : au moment du premier envoi, exporter le CSV des inscrits depuis Netlify et l'importer dans un outil d'e-mailing gratuit (Brevo ou Mailchimp), qui gère la désinscription et l'envoi en masse. Pas d'automatisation "détection de fichier → envoi automatique" : trop d'infrastructure à maintenir pour 2-3 envois par an, et pas d'étape de relecture avant envoi
    - **2026-08-10** : option discutée avec Adrien pour supprimer même cette étape d'export manuel :
