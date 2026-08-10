@@ -33,6 +33,12 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
      jours, juste un tas continu de photos qui tourne en boucle. Tant que le tableau est vide, le
      `placeholder-visual` d'origine reste affiché tel quel, donc rien ne casse en attendant les
      premières photos (Adrien doit en demander à Nicole/Gérald, même une ou deux pour commencer)
+   - **2026-08-10** : légende sous la photo, ajoutée à la demande d'Adrien. Nicole/Gérald
+     nomment leurs fichiers de façon descriptive (ex. `Puits creuse pres du village en 2019.jpg`),
+     et la légende affichée est extraite directement du nom de fichier (`legendeDepuisNomFichier`
+     dans `js/photos-accueil.js` : extension retirée, tirets/underscores remplacés par des
+     espaces). Aucune saisie séparée à faire : la légende suit automatiquement la photo du jour
+     puisqu'elle vient du même fichier. Testé et fonctionnel
 2. **Page newsletter** — inscription (formulaire simple email), éventuellement archive des newsletters passées
    - Le formulaire capture les inscrits via Netlify Forms (pas de vraie liste de diffusion). Décision de base : au moment du premier envoi, exporter le CSV des inscrits depuis Netlify et l'importer dans un outil d'e-mailing gratuit (Brevo ou Mailchimp), qui gère la désinscription et l'envoi en masse. Pas d'automatisation "détection de fichier → envoi automatique" : trop d'infrastructure à maintenir pour 2-3 envois par an, et pas d'étape de relecture avant envoi
    - **2026-08-10** : option discutée avec Adrien pour supprimer même cette étape d'export manuel :
@@ -48,13 +54,40 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
    - Si plusieurs documents par année apparaissent un jour (rapport + annexes), passer à un accordéon par année plutôt qu'une simple carte
    - Convention de nommage des fichiers : `assets/rapports/rapport-AAAA.pdf` (minuscules, tiret, sans espace) ; le tableau qui pilote la grille est dans `js/rapports.js`
    - **Important** : pour 2025, Nicole a fourni deux PDF, un rapport narratif (5 pages) et une version "_complet" avec annexe financière détaillée + bulletin de versement QR (IBAN, adresse, téléphone du domicile). Décision pour l'instant : seul le rapport narratif est publié sur le site (`rapport-2025.pdf`) ; la version complète est stockée hors du dossier du site, dans `../La Boule de Neige - documents internes/`, pour ne pas être déployée sur Netlify. À reconfirmer avec Nicole si un jour elle veut que la version complète (avec le détail des comptes) soit aussi publique
-   - **2026-08-08** : Nicole/Adrien ont fourni les 24 rapports 2002-2025 (dans `assets/rapports/`). Pas de rapport 2001 : l'association a été fondée le 1er novembre 2001, donc pas d'exercice complet cette année-là. Le rapport 2015 était scanné en 3 fichiers recto-verso façon livret (pages 1+6, 2+5, 3+4) ; reconstitué en un seul PDF 6 pages dans l'ordre via un script Python (PyMuPDF + Pillow, découpage puis réassemblage des demi-pages)
+   - **2026-08-08** : Nicole/Adrien ont fourni les 24 rapports 2002-2025 (dans `assets/rapports/`). Pas de rapport 2001 : l'association a été fondée le 1er novembre 2001, donc pas d'exercice complet cette année-là. Le rapport 2015 était scanné en 3 fichiers recto-verso façon livret (pages 1+6, 2+5, 3+4) ; reconstitué en un seul PDF 6 pages dans l'ordre via un script Python (PyMuPDF + Pillow, découpage puis réassemblage des demi-pages). **Confirmé en réunion le 2026-08-10** : Nicole et Gérald n'ont que cette version scannée en 3 morceaux, il n'existe pas de meilleur original à demander. Notre reconstitution reste donc la version définitive
 4. **Page de contact** — formulaire (Netlify Forms comme pour les autres projets), coordonnées de l'association
 5. **Page de donation** — affichage du QR code fourni par le client, éventuellement lien IBAN/coordonnées bancaires en complément
    - QR code et IBAN récupérés depuis le bulletin de versement du rapport annuel 2025 (`assets/img/qr-don.png`), vérifié scannable (décodage QR Suisse SPC confirmé)
 6. **Page histoire (`histoire.html`)** — le récit fondateur complet de l'association, pas dans le nav
    principal, accessible via un lien depuis la frise "Notre histoire" de la page d'accueil. Contenu
    basé sur `a Naissance de notre Association et buts.docx` (voir Notes diverses)
+   - **2026-08-10** : idée d'Adrien, mise en page texte/photo alternée gauche-droite pour les 4
+     sections narratives ("Une correspondance qui dure seize ans", "Le voyage de 2001", "Le
+     premier pas", "Quatre axes d'action"), en réutilisant la grille `split-section` existante en
+     alternant simplement l'ordre des blocs dans le HTML. Chaque section a un
+     `<div class="photo-carousel" data-section="...">` rempli par `js/histoire-carousel.js`, qui
+     lit le tableau `histoirePhotos` (photos dans `assets/img/histoire/`). Volontairement
+     différent du système de photo tournante de l'accueil : ici chaque photo illustre un moment
+     précis, donc Nicole/Gérald doivent désigner quelle photo va avec quelle section, pas de
+     rotation automatique
+     - 0 photo pour une section → `placeholder-visual` affiché, comme ailleurs sur le site
+     - 1 photo → juste l'image, aucune flèche
+     - Plusieurs photos → flèches précédent/suivant manuelles (rondes, semi-transparentes,
+       inspirées d'un exemple qu'Adrien a montré). Défilement automatique volontairement écarté
+       (mauvaise pratique d'accessibilité, distrait pendant la lecture du texte à côté)
+     - Section "Quatre axes d'action" pensée pour accueillir 4 photos (une par axe : eau,
+       éducation, développement rural, aide humanitaire) dans ce même carrousel, plutôt qu'une
+       photo générique unique
+     - Testé avec des images de remplacement dans les 3 configurations (0, 1, plusieurs), tableau
+       remis à vide ensuite en attendant les vraies photos
+     - **Correctif du même jour** : quand le texte d'une section est nettement plus long que la
+       photo (cas de "Quatre axes d'action", 5 blocs de texte), la boîte photo gardait sa hauteur
+       minimale et laissait un grand vide en dessous (repéré par Adrien sur une capture). Corrigé
+       avec une classe `.split-photo` (ajoutée uniquement sur les 4 sections concernées de
+       `histoire.html`, pas sur `.split-section` globalement pour ne pas affecter newsletter.html
+       et contact.html qui l'utilisent aussi) : `align-items: stretch` plutôt que `start`, avec
+       `.photo-carousel` et son placeholder en `height: 100%` pour remplir toute la hauteur de la
+       colonne de texte en face
 
 ## Palette de couleurs
 
@@ -70,7 +103,9 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
   détails graphiques), jamais en aplats
 - **Décision du 2026-08-08** : à la demande de Nicole et Gérald (après test de plusieurs teintes,
   voir `../La Boule de Neige - documents internes/couleurs-fond-comparatif/`), le fond blanc de
-  base est remplacé par un jaune pâle `#FFF9D2`. Le bleu glacé reste inchangé
+  base est remplacé par un jaune pâle `#FFF9D2`. Le bleu glacé reste inchangé.
+  **Validé en réunion le 2026-08-10** : Nicole et Gérald ont confirmé qu'ils aiment cette
+  palette, rien à changer de ce côté
 - **2026-08-10** : header et footer utilisaient tous les deux `--color-bg-alt` (`#EEF1F3`), comme
   les sections alternées au milieu des pages. Adrien a remarqué que le footer et la dernière
   section avant lui se confondaient (même gris, contiguës). Corrigé en donnant à chacun sa propre
@@ -194,25 +229,58 @@ Réunion prévue le jeudi 2026-08-06.
   etc.) sur le site public : le rapport annuel les nomme et les montre en photo pour les
   membres, mais est-ce que Nicole veut le même niveau de détail sur un site accessible à tous ?
   Même question pour Alain et sa famille, au coeur du récit sur `histoire.html`
+  - **2026-08-10** : pas de réponse tranchée à la réunion. Nicole et Gérald ont adoré la façon
+    dont les textes sont rédigés et vont reprendre ce qui existe pour y ajouter eux-mêmes ce
+    qu'ils jugent important, plutôt que de répondre par oui/non à cette question. On verra donc
+    ce qu'ils ajoutent (noms, détails) dans leurs propres modifications, à respecter tel quel
+    une fois reçu plutôt qu'à décider nous-mêmes. Ils comptent aussi préciser eux-mêmes la date
+    exacte de l'école (la nuance jardin d'enfants 2015 / école primaire 2017 relevée plus haut)
+    et ajouter un ou deux jalons à la frise historique
 
 ### Infrastructure technique
 
 - **GitHub** : créer le dépôt sous un compte qui appartient à l'association (ou à Nicole/Gérald),
   pas sous un compte personnel d'Adrien, pour qu'ils restent propriétaires de leur code sur le
   long terme. Ont-ils déjà un compte GitHub ? Sinon, avec quelle adresse e-mail le créer ?
+  Montage prévu, confirmé par Adrien le 2026-08-11 : Nicole/Gérald propriétaires du dépôt, Adrien
+  ajouté comme collaborateur avec son propre compte GitHub (adrien.arzabe@outlook.com, user
+  `a-am86`). Même logique ensuite pour relier Netlify puis les DNS Infomaniak
 - **Netlify** : même logique, compte à créer avec une adresse mail qu'ils contrôlent, connecté
   au GitHub ci-dessus, pour le déploiement automatique
-- **Nom de domaine Infomaniak** : ont-ils déjà un domaine réservé ? Sinon, quel nom exactement
-  (laboudedeneige.ch ? .org ? .swiss ?), vérifier la disponibilité avant la réunion. Prévoir un
-  accès (ou leur présence) pour configurer les DNS vers Netlify une fois le site prêt
-- **Adresse e-mail dédiée** : veulent-ils une adresse du type contact@laboudedeneige.ch (via
+- **Nom de domaine Infomaniak** : ont-ils déjà un domaine réservé ? Sinon, quel nom exactement.
+  **2026-08-11** : `labouledeneige.ch` (sans tirets) recommandé par Adrien à Claude, disponibilité
+  vérifiée et confirmée ce jour-là. Raisons du choix sans tirets : plus facile à dicter à voix
+  haute, plus pro, se lit très bien même collé. `association-labouledeneige.ch` gardé en solution
+  de repli seulement si jamais le premier choix devenait indisponible d'ici la réunion. Reste à
+  faire valider ce nom par Nicole/Gérald puis l'enregistrer, et prévoir un accès (ou leur
+  présence) pour configurer les DNS vers Netlify une fois le site prêt
+- **Adresse e-mail dédiée** : veulent-ils une adresse du type contact@labouledeneige.ch (via
   Infomaniak) plutôt que de publier l'adresse personnelle nicole.rossellat@starlac.ch partout
-  sur le site ? Répond en partie à la question du numéro de domicile ci-dessus
+  sur le site ? Répond en partie à la question du numéro de domicile ci-dessus. Suggestion
+  d'Adrien : `contact@` plutôt que `association@`, plus standard ; Infomaniak permet probablement
+  de créer plusieurs alias si Nicole/Gérald veulent les deux
 - **Brevo (ou Mailchimp)** : même logique que GitHub/Netlify, le compte doit appartenir à
   Nicole/Gérald, pas à Adrien. Ont-ils une préférence entre les deux outils ? Une fois le compte
   créé de leur côté, il suffit qu'ils transmettent à Adrien le code d'intégration du formulaire
   (ou la clé API) pour brancher directement le formulaire newsletter du site dessus : les
   inscrits arrivent alors automatiquement dans leur liste, sans export CSV manuel à chaque envoi
+  - **2026-08-11** : Adrien a créé un compte Brevo gratuit personnel pour tester l'interface avant
+    d'en parler à Nicole/Gérald. Ce compte de test doit être supprimé une fois l'exploration
+    terminée, il ne doit pas devenir le compte définitif de l'association par facilité. Free plan
+    Brevo vérifié le 2026-08-10 : 300 e-mails/jour, contacts illimités, aucune installation
+    (100% web), mention "envoyé avec Brevo" dans les e-mails sauf plan payant. Largement
+    suffisant pour 2-3 envois par an
+  - **Recette d'intégration testée le 2026-08-11** (à refaire avec le vrai compte de Nicole/Gérald
+    le moment venu) : dans Brevo, Marketing → Formulaires → Créer un formulaire d'inscription →
+    choisir/créer une liste → étape "Partager" → onglet "HTML simple". Le code généré contient
+    tout le style Brevo (polices, couleurs, `sib-styles.css`) à ignorer complètement : on garde
+    uniquement notre formulaire déjà stylé sur `newsletter.html` et on y branche seulement
+    l'`action` du `<form>` (URL unique du type `https://xxxx.sibforms.com/serve/...`), le nom du
+    champ e-mail (`name="EMAIL"`, en majuscules), le champ piège anti-spam déjà fourni par Brevo
+    (`name="email_address_check"`, équivalent à notre honeypot Netlify actuel, donc pas besoin du
+    reCAPTCHA que Brevo recommande par défaut), et les deux champs cachés `locale` et `html_type`.
+    Remplacera le `data-netlify="true"` actuel du formulaire newsletter par un POST direct vers
+    Brevo
 - **Notifications des formulaires** : qui doit recevoir un e-mail à chaque nouvelle inscription
   newsletter ou message de contact reçu via Netlify Forms ? Nicole, Gérald, les deux ?
 - **Mentions légales / confidentialité** : le site collecte des e-mails via les formulaires,
