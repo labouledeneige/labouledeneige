@@ -88,6 +88,14 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
        et contact.html qui l'utilisent aussi) : `align-items: stretch` plutôt que `start`, avec
        `.photo-carousel` et son placeholder en `height: 100%` pour remplir toute la hauteur de la
        colonne de texte en face
+7. **Page d'attente (`bientot-disponible.html`)** — pas un vrai contenu du site, page autonome
+   créée le 2026-08-10 en vue de l'enregistrement du domaine `labouledeneige.ch` prévu le
+   2026-08-11. Inspirée d'une page similaire faite par Adrien pour un autre client
+   (charbonade-acacia.ch) : logo, "Prochainement / Notre nouveau site arrive bientôt", message
+   rassurant, coordonnées (adresse, e-mail, portable). Pas encore branchée nulle part ; l'idée est
+   de la renommer en `index.html` (ou de faire une redirection Netlify) le temps que le vrai site
+   soit prêt avec les photos et textes définitifs de Nicole/Gérald, à décider avec Adrien une fois
+   les accès Netlify en main
 
 ## Palette de couleurs
 
