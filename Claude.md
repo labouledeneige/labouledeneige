@@ -15,7 +15,9 @@ pouvoir revenir en arrière facilement si le résultat ne plaît pas une fois vu
 
 Coordonnées officielles de l'association (confirmées via le rapport annuel 2025) :
 - Adresse : Chemin des Cyprès 10, 1226 Thônex
-- E-mail : nicole.rossellat@starlac.ch
+- E-mail : contact@labouledeneige.ch (adresse dédiée créée le 2026-08-19 via kSuite Infomaniak,
+  remplace l'ancienne adresse personnelle nicole.rossellat@starlac.ch utilisée jusque-là sur le
+  site, cf. "Adresse e-mail dédiée" dans les questions résolues)
 - Téléphone : 076 379 49 16 (portable), 022 349 49 16 (domicile)
 - IBAN : CH05 0900 0000 1706 5225 3
 - Association reconnue d'utilité publique (dons exonérés d'impôt)
@@ -277,11 +279,12 @@ Réunion prévue le jeudi 2026-08-06.
   de repli seulement si jamais le premier choix devenait indisponible d'ici la réunion. Reste à
   faire valider ce nom par Nicole/Gérald puis l'enregistrer, et prévoir un accès (ou leur
   présence) pour configurer les DNS vers Netlify une fois le site prêt
-- **Adresse e-mail dédiée** : veulent-ils une adresse du type contact@labouledeneige.ch (via
-  Infomaniak) plutôt que de publier l'adresse personnelle nicole.rossellat@starlac.ch partout
-  sur le site ? Répond en partie à la question du numéro de domicile ci-dessus. Suggestion
-  d'Adrien : `contact@` plutôt que `association@`, plus standard ; Infomaniak permet probablement
-  de créer plusieurs alias si Nicole/Gérald veulent les deux
+- ~~Adresse e-mail dédiée~~ **Résolu le 2026-08-19** : `contact@labouledeneige.ch` créée via
+  kSuite (Infomaniak) et remplace `nicole.rossellat@starlac.ch` partout sur le site
+  (contact.html, footer, page d'attente). Création un peu confuse côté Infomaniak : l'action
+  "Créer une adresse mail" renvoyait en boucle vers un écran de confirmation de commande plutôt
+  que d'ouvrir un formulaire ; la finalisation s'est faite via un lien reçu par e-mail
+  d'Infomaniak, pas entièrement dans l'interface web
 - **Brevo (ou Mailchimp)** : même logique que GitHub/Netlify, le compte doit appartenir à
   Nicole/Gérald, pas à Adrien. Ont-ils une préférence entre les deux outils ? Une fois le compte
   créé de leur côté, il suffit qu'ils transmettent à Adrien le code d'intégration du formulaire
