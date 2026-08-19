@@ -96,6 +96,18 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
    de la renommer en `index.html` (ou de faire une redirection Netlify) le temps que le vrai site
    soit prêt avec les photos et textes définitifs de Nicole/Gérald, à décider avec Adrien une fois
    les accès Netlify en main
+   - **2026-08-19** : mise en place via un fichier `_redirects` à la racine (convention Netlify),
+     plutôt que de renommer des fichiers à chaque bascule. Toutes les routes renvoient de force
+     (`200!`) vers `bientot-disponible.html`, sauf `/css/*`, `/js/*` et `/assets/*` qui doivent
+     rester accessibles normalement pour que la page d'attente s'affiche correctement (sinon elle
+     perd son style et ses images). Pour repasser sur le vrai site une fois prêt : supprimer ou
+     commenter uniquement la dernière ligne du fichier (`/*  /bientot-disponible.html  200!`),
+     aucun renommage de fichier nécessaire. Comptes GitHub (`labouledeneige/labouledeneige`) et
+     Netlify créés par Nicole/Gérald avec leur mail perso le 2026-08-19, Adrien ajouté comme
+     collaborateur GitHub sous `a-am86`. Domaine `labouledeneige.ch` enregistré chez Infomaniak le
+     même jour (kSuite inclus, 1 adresse mail partagée). DNS configurés : `A` sur `@` vers
+     `75.2.60.5`, `CNAME` sur `www` vers `labouledeneige-2.netlify.app` (nom du site Netlify),
+     propagation en cours au moment de l'écriture de cette note
 
 ## Palette de couleurs
 
