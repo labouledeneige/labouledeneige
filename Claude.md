@@ -41,6 +41,16 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
      dans `js/photos-accueil.js` : extension retirée, tirets/underscores remplacés par des
      espaces). Aucune saisie séparée à faire : la légende suit automatiquement la photo du jour
      puisqu'elle vient du même fichier. Testé et fonctionnel
+   - **2026-08-27** : Nicole et Gérald ont renvoyé `Textes du site - accueil et histoire.docx`
+     (dans `../La Boule de Neige - documents internes/`) avec leurs corrections. Changement
+     majeur : la frise "Notre histoire" passe de 5 à 22 entrées (1986 à 2025, quasi une par
+     année), rendant cette section de l'accueil beaucoup plus longue qu'avant. Autres
+     corrections notables : date de fondation précisée (30 novembre, pas le 1er, voir aussi
+     "Questions en attente"), "un thé" corrigé en "le tô" (plat traditionnel burkinabè, sur
+     `histoire.html`), mission reformulée avec référence légale ("association, selon les
+     articles 60 du Code Civil Suisse" au lieu de "association familiale"). Le texte français
+     de `index.html` et `histoire.html` est maintenant aligné sur ce document ; l'ancienne
+     version du fichier Word est gardée en référence sous `...-old.docx`
 2. **Page newsletter** — inscription (formulaire simple email), éventuellement archive des newsletters passées
    - Le formulaire capture les inscrits via Netlify Forms (pas de vraie liste de diffusion). Décision de base : au moment du premier envoi, exporter le CSV des inscrits depuis Netlify et l'importer dans un outil d'e-mailing gratuit (Brevo ou Mailchimp), qui gère la désinscription et l'envoi en masse. Pas d'automatisation "détection de fichier → envoi automatique" : trop d'infrastructure à maintenir pour 2-3 envois par an, et pas d'étape de relecture avant envoi
    - **2026-08-10** : option discutée avec Adrien pour supprimer même cette étape d'export manuel :
@@ -56,10 +66,14 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
    - Si plusieurs documents par année apparaissent un jour (rapport + annexes), passer à un accordéon par année plutôt qu'une simple carte
    - Convention de nommage des fichiers : `assets/rapports/rapport-AAAA.pdf` (minuscules, tiret, sans espace) ; le tableau qui pilote la grille est dans `js/rapports.js`
    - **Historique** : pour 2025, Nicole a fourni deux PDF, un rapport narratif (5 pages) et une version "_complet" avec annexe financière détaillée + bulletin de versement QR (IBAN, adresse, téléphone du domicile). D'abord gardée hors du site public par précaution. **Résolu le 2026-08-18** : Nicole/Gérald ont validé la publication de la version complète, `rapport-2025.pdf` est maintenant cette version à 6 pages (voir section "Questions en attente" pour le détail)
-   - **2026-08-08** : Nicole/Adrien ont fourni les 24 rapports 2002-2025 (dans `assets/rapports/`). Pas de rapport 2001 : l'association a été fondée le 1er novembre 2001, donc pas d'exercice complet cette année-là. Le rapport 2015 était scanné en 3 fichiers recto-verso façon livret (pages 1+6, 2+5, 3+4) ; reconstitué en un seul PDF 6 pages dans l'ordre via un script Python (PyMuPDF + Pillow, découpage puis réassemblage des demi-pages). **Confirmé en réunion le 2026-08-10** : Nicole et Gérald n'ont que cette version scannée en 3 morceaux, il n'existe pas de meilleur original à demander. Notre reconstitution reste donc la version définitive
+   - **2026-08-08** : Nicole/Adrien ont fourni les 24 rapports 2002-2025 (dans `assets/rapports/`). Pas de rapport 2001 : l'association a été fondée le 30 novembre 2001, donc pas d'exercice complet cette année-là. Le rapport 2015 était scanné en 3 fichiers recto-verso façon livret (pages 1+6, 2+5, 3+4) ; reconstitué en un seul PDF 6 pages dans l'ordre via un script Python (PyMuPDF + Pillow, découpage puis réassemblage des demi-pages). **Confirmé en réunion le 2026-08-10** : Nicole et Gérald n'ont que cette version scannée en 3 morceaux, il n'existe pas de meilleur original à demander. Notre reconstitution reste donc la version définitive
 4. **Page de contact** — formulaire (Netlify Forms comme pour les autres projets), coordonnées de l'association
 5. **Page de donation** — affichage du QR code fourni par le client, éventuellement lien IBAN/coordonnées bancaires en complément
    - QR code et IBAN récupérés depuis le bulletin de versement du rapport annuel 2025 (`assets/img/qr-don.png`), vérifié scannable (décodage QR Suisse SPC confirmé)
+   - **2026-08-27** : IBAN/titulaire/adresse mis en `<strong>` dans `.iban-block` à la demande
+     d'Adrien, pour rester lisible pour un public plus âgé. Ajout d'un bouton "Télécharger le
+     bulletin de versement (PDF)" (`assets/documents/bulletin-versement.pdf`, fourni par le
+     client) pour les donateurs qui préfèrent payer au guichet plutôt qu'en ligne
 6. **Page histoire (`histoire.html`)** — le récit fondateur complet de l'association, pas dans le nav
    principal, accessible via un lien depuis la frise "Notre histoire" de la page d'accueil. Contenu
    basé sur `a Naissance de notre Association et buts.docx` (voir Notes diverses)
@@ -238,9 +252,10 @@ Réunion prévue le jeudi 2026-08-06.
 - Style du logo (trait noir, sourire, assez enfantin) : c'est le logo officiel définitif,
   mais est-ce qu'une version simplifiée existe ou est envisageable pour un usage en petit
   format (favicon), où le dessin actuel devient flou ?
-- ~~Année de création de l'association~~ **Résolu le 2026-08-08** : fondée le 1er novembre 2001,
-  au retour du premier voyage au Burkina Faso. Voir `histoire.html` pour le récit complet
-  (origine : `a Naissance de notre Association et buts.docx`, fourni par le client)
+- ~~Année de création de l'association~~ **Résolu le 2026-08-08**, date précisée le 2026-08-27 :
+  fondée le 30 novembre 2001 (et non le 1er comme indiqué au départ), au retour du premier
+  voyage au Burkina Faso. Voir `histoire.html` pour le récit complet (origine : `a Naissance de
+  notre Association et buts.docx`, fourni par le client)
 - ~~Version "_complet" du rapport 2025~~ **Résolu le 2026-08-18** : Adrien confirme que Nicole
   et Gérald sont d'accord de la rendre publique. Simplifié au maximum : `assets/rapports/rapport-2025.pdf`
   contient maintenant directement la version complète (6 pages, annexe financière + QR code de
