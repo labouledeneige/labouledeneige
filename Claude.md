@@ -211,10 +211,20 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
   il part petit et décalé à gauche, tourne sur lui-même en grandissant, et s'arrête centré à sa
   taille finale, en écho au nom de l'association. Rotation finale fixée à `720deg` (2 tours pleins)
   et pas un multiple non-entier, sinon le logo termine tourné (bug rencontré et corrigé : `620deg`
-  laissait le sourire de travers). Timing `2.2s ease-in-out` avec des arrêts intermédiaires dans
-  les keyframes (pas juste 0%/100%) pour que la croissance reste visible sur toute la durée, pas
-  seulement dans les premières 200ms. Respecte `prefers-reduced-motion`. L'ancienne version statique
-  du logo en bas de page a été retirée pour ne pas répéter le même élément deux fois
+  laissait le sourire de travers). Timing `2.2s ease-in-out`. Respecte `prefers-reduced-motion`.
+  L'ancienne version statique du logo en bas de page a été retirée pour ne pas répéter le même
+  élément deux fois
+  - **Correctif du 2026-08-27** : la première version ajoutait un point d'arrêt intermédiaire à
+    50% dans les keyframes pour étaler la croissance sur toute la durée (sinon tout se jouait
+    dans les 200 premières ms avec une courbe `cubic-bezier(0.22, 1, 0.36, 1)` trop agressive).
+    Repéré par Adrien : ce point intermédiaire créait une micro-pause perceptible au milieu de
+    l'animation, car CSS applique la fonction de timing séparément à chaque segment entre deux
+    keyframes qui redéfinissent une même propriété. Corrigé en ne gardant qu'un seul segment
+    continu pour `transform` (uniquement 0% et 100%), avec `ease-in-out` appliqué une seule fois
+    sur toute la durée : mouvement fluide sans à-coup, croissance toujours bien répartie (vérifié
+    en échantillonnant la matrice de transformation à intervalles réguliers). Un point d'arrêt à
+    8% reste pour l'opacité (fondu d'entrée rapide), mais ça ne crée pas de saccade visible car
+    l'opacité est une propriété indépendante du mouvement
 - **2026-08-09** : le drapeau du Burkina Faso a aussi été demandé explicitement par les clients.
   Petite tension avec la règle posée plus haut ("ne pas utiliser le drapeau en aplat, trop
   institutionnel/politique pour une petite association") : c'est leur demande directe, donc pas

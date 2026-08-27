@@ -460,11 +460,8 @@ section {
     transform: translateX(-22rem) scale(0.22) rotate(0deg);
     opacity: 0;
   }
-  10% {
+  8% {
     opacity: 1;
-  }
-  50% {
-    transform: translateX(-7rem) scale(0.55) rotate(360deg);
   }
   100% {
     transform: translateX(0) scale(1) rotate(720deg);
