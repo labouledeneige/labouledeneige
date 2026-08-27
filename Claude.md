@@ -1,5 +1,52 @@
 # Projet : Site web association La Boule de Neige
 
+## Multilingue (fr/en/de)
+
+- **2026-08-27** : Adrien a demandé une version anglaise et allemande du site. Décision : Claude
+  traduit directement (pas de traducteur professionnel côté client pour l'instant), **mais ces
+  traductions doivent être relues par un locuteur natif avant toute mise en ligne publique** —
+  Claude n'est pas un traducteur certifié, et le ton très travaillé du site (voir "Principes
+  d'écriture" plus bas) est plus difficile à garantir dans une langue non-source.
+- Approche : un sous-dossier par langue (`en/`, `de/`), qui reproduit la structure des pages
+  racine (françaises). Le français reste à la racine sans changement d'URL (`index.html`,
+  `histoire.html`, etc.), pas de dossier `fr/` séparé.
+- **Déploiement en deux phases**, pour ne pas devoir tout refaire si le style de traduction doit
+  être ajusté après relecture :
+  - **Phase 1 (faite le 2026-08-27)** : `index.html` et `histoire.html`, les deux pages dont le
+    français venait d'être validé par Nicole/Gérald. Fichiers : `en/index.html`,
+    `en/histoire.html`, `de/index.html`, `de/histoire.html`.
+  - **Phase 2 (à faire)** : `newsletter.html`, `rapports.html`, `contact.html`, `don.html` dans
+    les deux langues, une fois la phase 1 validée.
+- Sélecteur de langue : `<li class="lang-switch">` ajouté à la fin de la liste `.main-nav ul`
+  sur chaque page (donc il s'affiche aussi dans le menu mobile, sans code supplémentaire). Trois
+  liens FR/EN/DE, la langue courante marquée `aria-current="true"`. Chaque page doit lister ses
+  propres liens en dur (site codé à la main, pas de génération dynamique) : depuis la racine,
+  les liens vers `en/`/`de/` sont relatifs à ce sous-dossier ; depuis `en/`/`de/`, le lien FR
+  remonte d'un niveau (`../index.html`).
+- **Pages pas encore traduites** : depuis `en/`/`de/`, les liens de nav vers newsletter/rapports/
+  contact/don pointent vers les pages françaises à la racine (`../newsletter.html`, etc.), en
+  attendant la phase 2. Mélange de langues temporaire et assumé, pas un bug.
+- **Piège technique rencontré** : `js/photos-accueil.js` et `js/histoire-carousel.js`
+  construisaient un chemin d'image relatif à la page HTML (`'assets/img/...'`). Depuis
+  `en/index.html`, ce chemin relatif pointait vers `/en/assets/img/...` (inexistant) au lieu de
+  `/assets/img/...`. Corrigé en chemins absolus (`'/assets/img/...'`), qui fonctionnent quelle
+  que soit la profondeur de la page. Point à vérifier pour tout futur script JS partagé entre
+  page racine et sous-dossiers de langue.
+- Les textes injectés par ces deux scripts (légende alt de la photo tournante, "Photo à venir",
+  libellés des flèches du carrousel) sont désormais choisis selon `document.documentElement.lang`
+  de la page (objet de traductions `fr`/`en`/`de` en tête de chaque fichier JS), pour rester
+  cohérents même si le site est en anglais ou en allemand.
+- Le nom de l'association ("La Boule de Neige") n'est **pas traduit**, y compris dans les
+  titres anglais/allemands ("A small gesture can snowball", "Eine kleine Geste kann einen
+  Schneeball ins Rollen bringen") : c'est un nom propre, comme pour la plupart des associations
+  locales sans nom de marque établi dans d'autres langues.
+- Choix de traduction à noter pour la relecture : "association reconnue d'utilité publique" →
+  EN "association recognized as being of public benefit", DE "als gemeinnützig anerkannter
+  Verein" (équivalents du statut fiscal suisse, pas de traduction littérale mot à mot possible).
+  "Le tô" (plat traditionnel burkinabè) volontairement non traduit, gardé tel quel avec une
+  explication contextuelle ("their staple food" / "ihr wichtigstes Nahrungsmittel"), comme en
+  français.
+
 ## Contexte
 
 Site vitrine pour La Boule de Neige, association qui soutient des projets au Burkina Faso.

@@ -7,12 +7,26 @@
 // Une section avec 1 seule photo l'affiche simplement. Une section avec
 // plusieurs photos affiche des flèches pour naviguer manuellement (pas de
 // défilement automatique). Une section sans photo affiche un placeholder.
+//
+// Textes traduits selon la langue de la page (<html lang="...">), car ce
+// script est partagé entre les versions fr/en/de.
 var histoirePhotos = {
   correspondance: [],
   voyage: [],
   premierPas: [],
   axes: []
 };
+
+var histoireCarouselTextes = {
+  fr: { placeholder: 'Photo à venir', prev: 'Photo précédente', next: 'Photo suivante' },
+  en: { placeholder: 'Photo coming soon', prev: 'Previous photo', next: 'Next photo' },
+  de: { placeholder: 'Foto folgt', prev: 'Vorheriges Foto', next: 'Nächstes Foto' }
+};
+
+function texteCarousel() {
+  var langue = document.documentElement.lang || 'fr';
+  return histoireCarouselTextes[langue] || histoireCarouselTextes.fr;
+}
 
 function creerFlecheCarousel(direction, label) {
   var bouton = document.createElement('button');
@@ -29,8 +43,10 @@ function creerFlecheCarousel(direction, label) {
 }
 
 function rendreCarousel(container, photos) {
+  var textes = texteCarousel();
+
   if (!photos || photos.length === 0) {
-    container.innerHTML = '<div class="placeholder-visual">Photo à venir</div>';
+    container.innerHTML = '<div class="placeholder-visual">' + textes.placeholder + '</div>';
     return;
   }
 
@@ -41,7 +57,7 @@ function rendreCarousel(container, photos) {
   img.alt = '';
 
   function afficher() {
-    img.src = 'assets/img/histoire/' + photos[index];
+    img.src = '/assets/img/histoire/' + photos[index];
   }
   afficher();
 
@@ -49,13 +65,13 @@ function rendreCarousel(container, photos) {
   container.appendChild(img);
 
   if (photos.length > 1) {
-    var precedent = creerFlecheCarousel('prev', 'Photo précédente');
+    var precedent = creerFlecheCarousel('prev', textes.prev);
     precedent.addEventListener('click', function () {
       index = (index - 1 + photos.length) % photos.length;
       afficher();
     });
 
-    var suivant = creerFlecheCarousel('next', 'Photo suivante');
+    var suivant = creerFlecheCarousel('next', textes.next);
     suivant.addEventListener('click', function () {
       index = (index + 1) % photos.length;
       afficher();

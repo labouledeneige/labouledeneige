@@ -16,6 +16,12 @@ function legendeDepuisNomFichier(nomFichier) {
   return nom;
 }
 
+var photosAccueilAlt = {
+  fr: 'Photo du terrain, Burkina Faso',
+  en: 'Photo from the field, Burkina Faso',
+  de: 'Foto vor Ort, Burkina Faso'
+};
+
 document.addEventListener('DOMContentLoaded', function () {
   if (photosAccueil.length === 0) return;
 
@@ -26,9 +32,11 @@ document.addEventListener('DOMContentLoaded', function () {
   var dayOfYear = Math.floor((Date.now() - startOfYear) / 86400000);
   var chosen = photosAccueil[dayOfYear % photosAccueil.length];
 
+  var langue = document.documentElement.lang || 'fr';
+
   var img = document.createElement('img');
-  img.src = 'assets/img/photos-accueil/' + chosen;
-  img.alt = 'Photo du terrain, Burkina Faso';
+  img.src = '/assets/img/photos-accueil/' + chosen;
+  img.alt = photosAccueilAlt[langue] || photosAccueilAlt.fr;
   img.className = 'hero-photo-img';
 
   var legende = document.createElement('p');
