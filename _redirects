@@ -2,8 +2,13 @@
 # sauf les fichiers CSS/JS/images dont cette page a besoin pour s'afficher.
 # Pour repasser sur le vrai site une fois prêt : supprimer (ou commenter)
 # la toute dernière ligne de ce fichier, rien d'autre à changer.
+#
+# Sur cette branche "apercu-nicole" uniquement : la redirection est
+# désactivée exprès, pour que le lien de prévisualisation Netlify de cette
+# branche montre le vrai site. Le domaine public labouledeneige.ch (branche
+# master) garde la page d'attente, cette branche ne le concerne pas.
 
 /css/*     /css/:splat     200
 /js/*      /js/:splat      200
 /assets/*  /assets/:splat  200
-/*         /bientot-disponible.html  200!
+# /*       /bientot-disponible.html  200!
