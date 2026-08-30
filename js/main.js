@@ -28,6 +28,22 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+// Bloc de texte "voir plus / voir moins" (ex. Quatre axes d'action sur histoire.html) :
+// réutilisable partout où un texte risque d'être plus long que la photo à côté.
+// Les libellés viennent des attributs data- du bouton pour rester traduits sur en/de.
+document.addEventListener('DOMContentLoaded', function () {
+  var toggles = document.querySelectorAll('.text-collapse-toggle');
+
+  toggles.forEach(function (bouton) {
+    bouton.addEventListener('click', function () {
+      var bloc = bouton.closest('.text-collapse');
+      var estOuvert = bloc.classList.toggle('is-expanded');
+      bouton.setAttribute('aria-expanded', estOuvert ? 'true' : 'false');
+      bouton.textContent = estOuvert ? bouton.getAttribute('data-label-less') : bouton.getAttribute('data-label-more');
+    });
+  });
+});
+
 // Envoi des formulaires Netlify en AJAX, avec message de confirmation sans rechargement de page
 document.addEventListener('DOMContentLoaded', function () {
   var forms = document.querySelectorAll('form[data-netlify]');

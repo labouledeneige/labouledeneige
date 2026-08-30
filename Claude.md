@@ -98,6 +98,31 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
      articles 60 du Code Civil Suisse" au lieu de "association familiale"). Le texte français
      de `index.html` et `histoire.html` est maintenant aligné sur ce document ; l'ancienne
      version du fichier Word est gardée en référence sous `...-old.docx`
+   - **2026-08-30** : premières vraies photos reçues et intégrées, depuis
+     `../La Boule de Neige - documents internes/Photos/Photos pour le site/`. Dossier
+     "Photos Accroche OK" (64 fichiers) → `assets/img/photos-accueil/`, tableau `photosAccueil`
+     dans `js/photos-accueil.js` rempli. Comme la légende publique est extraite directement du
+     nom de fichier, les coquilles manifestes du dossier source ont été corrigées en copiant
+     (accents, doublons de lettres, espaces doubles : "enfanfs" → "enfants", "Madaga" →
+     "Mahadaga", "avac" → "avec", "jusq'à" → "jusqu'à", etc.), mais le contenu n'a pas été
+     réécrit. `legendeDepuisNomFichier()` a aussi été rendue capable de retirer automatiquement
+     un suffixe de numérotation en fin de nom (` 2`, `-3`, ` (2)`), utile pour les prochaines
+     photos que Nicole/Gérald ajouteront eux-mêmes et qui porteront probablement le même genre
+     de suffixe de l'appareil photo/téléphone. Décision d'Adrien : les prénoms de partenaires
+     burkinabè déjà présents dans certains noms de fichiers (Ezéchiel, familles Lompo, Fidèle,
+     etc.) sont conservés tels quels dans la légende publique — ça répond dans les faits à la
+     question longtemps restée ouverte "utilisation de vrais prénoms" (voir plus bas), la photo
+     de couverture les diffusant maintenant chaque jour sur les 3 langues du site.
+   - **2026-08-30** : nouvelle section carrousel sous la frise "Les grandes étapes", demandée par
+     Adrien pour montrer des photos reliées à une année précise (pas de légende détaillée, juste
+     l'année en incrustation). Nouveau fichier `js/grandes-etapes.js` (même logique de flèches
+     manuelles que `js/histoire-carousel.js`, mais un seul carrousel séquentiel plutôt que des
+     slots par section), tableau `grandesEtapesPhotos` de `{ annee, fichier }` dans l'ordre
+     chronologique. Photos dans `assets/img/grandes-etapes/` (22 fichiers, dossier "Photos Les
+     grandes étapes OK" du client). Toutes les années de la frise n'ont pas de photo (1986, 2001,
+     2005, 2013, 2014, 2019, 2020 manquantes) et certaines en ont deux (2004, 2022, 2025) :
+     confirmé avec Adrien, le carrousel affiche simplement toutes les photos disponibles dans
+     l'ordre, années répétées comprises, sans chercher à en garder une seule par année
 2. **Page newsletter** — inscription (formulaire simple email), éventuellement archive des newsletters passées
    - Le formulaire capture les inscrits via Netlify Forms (pas de vraie liste de diffusion). Décision de base : au moment du premier envoi, exporter le CSV des inscrits depuis Netlify et l'importer dans un outil d'e-mailing gratuit (Brevo ou Mailchimp), qui gère la désinscription et l'envoi en masse. Pas d'automatisation "détection de fichier → envoi automatique" : trop d'infrastructure à maintenir pour 2-3 envois par an, et pas d'étape de relecture avant envoi
    - **2026-08-10** : option discutée avec Adrien pour supprimer même cette étape d'export manuel :
@@ -151,6 +176,36 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
        et contact.html qui l'utilisent aussi) : `align-items: stretch` plutôt que `start`, avec
        `.photo-carousel` et son placeholder en `height: 100%` pour remplir toute la hauteur de la
        colonne de texte en face
+   - **2026-08-30** : intégration des vraies photos, depuis `../La Boule de Neige - documents
+     internes/Photos/Photos pour le site/` (dans `assets/img/histoire/`, tableau `histoirePhotos`
+     de `js/histoire-carousel.js`) :
+     - `correspondance` ← "Notre histoire/02 Alain Correspondance.jpg", `voyage` ← "Notre
+       histoire/01 Un âne et une charrette.jpg" (logique : le texte de cette section reparle
+       justement de la charrette de 1986 qu'ils retrouvent en 2001, pas la section
+       "correspondance" comme le nom du fichier le suggérerait au premier abord), `premierPas` ←
+       "Notre histoire/03 Achat des boeufs...", mapping donné explicitement par Adrien
+     - `axes` : finalement 3 photos et non 4 comme envisagé au départ (dossier "4 axes d'action"
+       du client n'en contient que 3, rien pour "Aide humanitaire") : Forage 2023 → Eau,
+       Éducation et scolarisation → Éducation, Maraîchage → Développement rural
+     - **"Voir plus" ajouté sur cette section** : le bloc de texte "Quatre axes d'action" est de
+       loin le plus long du site (intro + 4 sous-titres), et les 3 photos ont des ratios très
+       variés (une notamment très haute et étroite, 2300×4100). Comme `.split-photo` étire déjà
+       la colonne photo à la hauteur du texte (`object-fit: cover`), le risque n'était pas un
+       vide visuel (déjà réglé) mais un recadrage trop agressif si la colonne devenait très
+       haute. Les 2 derniers axes ("Développement rural", "Aide humanitaire") sont donc repliés
+       par défaut derrière un bouton "Voir plus", classes génériques `.text-collapse` /
+       `.text-collapse-content` / `.text-collapse-toggle` (CSS dans `css/style.css`, toggle JS
+       dans `js/main.js`, réutilisable ailleurs si un cas similaire se présente — les libellés du
+       bouton viennent des attributs `data-label-more`/`data-label-less` pour rester traduits sur
+       en/de). Vérifié au rendu : le recadrage de la photo de forage reste correct même replié
+     - Nouvelle photo pour la section "Notre façon de travailler" (jusque-là plein texte, sans
+       photo) : "Photo pour le texte/Séance de travail pour de nouveaux projets à Kompienga
+       2009.jpg" — photo qu'Adrien n'arrivait pas à situer au départ ("à voir où on la met, elle
+       est importante"), mais elle correspondait aussi à un fichier identique déjà présent dans
+       le dossier "Photos Accroche OK" (donc aussi utilisée dans la rotation de l'accueil).
+       Placement choisi par Claude et validé par Adrien ("je te laisse gérer") : section convertie
+       en `split-section split-photo` avec `<div class="photo-carousel" data-section="travail">`,
+       cohérent thématiquement ("séance de travail" ↔ "notre façon de travailler")
 7. **Page d'attente (`bientot-disponible.html`)** — pas un vrai contenu du site, page autonome
    créée le 2026-08-10 en vue de l'enregistrement du domaine `labouledeneige.ch` prévu le
    2026-08-11. Inspirée d'une page similaire faite par Adrien pour un autre client
@@ -322,10 +377,11 @@ Réunion prévue le jeudi 2026-08-06.
   `../La Boule de Neige - documents internes/` en référence
 - ~~Numéros de téléphone du domicile~~ **Résolu le 2026-08-18** : confirmé par Adrien, aucun
   souci à les publier tels quels, c'est leur domicile. Rien à changer sur `contact.html`
-- Utilisation de vrais prénoms et photos de partenaires burkinabè (Fidèle, Catherine, Bouama,
-  etc.) sur le site public : le rapport annuel les nomme et les montre en photo pour les
-  membres, mais est-ce que Nicole veut le même niveau de détail sur un site accessible à tous ?
-  Même question pour Alain et sa famille, au coeur du récit sur `histoire.html`
+- ~~Utilisation de vrais prénoms et photos de partenaires burkinabè~~ **Tranché dans les faits le
+  2026-08-30** : le lot de ~64 photos fourni pour la rotation quotidienne de l'accueil (Fidèle,
+  Ezéchiel, familles Lompo, etc.) contenait déjà les prénoms directement dans les noms de
+  fichiers, donc dans la légende publique. Adrien a confirmé les garder tels quels plutôt que de
+  les faire disparaître à l'anonymisation. Ancien contexte, gardé pour mémoire :
   - **2026-08-10** : pas de réponse tranchée à la réunion. Nicole et Gérald ont adoré la façon
     dont les textes sont rédigés et vont reprendre ce qui existe pour y ajouter eux-mêmes ce
     qu'ils jugent important, plutôt que de répondre par oui/non à cette question. On verra donc

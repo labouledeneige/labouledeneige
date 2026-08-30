@@ -11,10 +11,15 @@
 // Textes traduits selon la langue de la page (<html lang="...">), car ce
 // script est partagé entre les versions fr/en/de.
 var histoirePhotos = {
-  correspondance: [],
-  voyage: [],
-  premierPas: [],
-  axes: []
+  correspondance: ['02 Alain Correspondance.jpg'],
+  voyage: ['01 Un âne et une charrette.jpg'],
+  premierPas: ['03 Achat des boeufs pour les labours à Kompienga en 2002.jpg'],
+  axes: [
+    '01 Forage 2023.jpg',
+    '02 Education et scolarisation.jpg',
+    '03 Maraîchage.jpg'
+  ],
+  travail: ['Séance de travail pour de nouveaux projets à Kompienga 2009.jpg']
 };
 
 var histoireCarouselTextes = {

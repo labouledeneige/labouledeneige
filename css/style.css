@@ -666,6 +666,63 @@ section {
   right: 0.75rem;
 }
 
+/* Bloc de texte repliable ("voir plus"), utilisé quand un texte risque
+   d'être plus long que la photo affichée à côté (ex. Quatre axes d'action) */
+.text-collapse-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.text-collapse.is-expanded .text-collapse-content {
+  max-height: 40rem;
+}
+
+.text-collapse-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-top: var(--space-2);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-accent-warm);
+  cursor: pointer;
+}
+
+.text-collapse-toggle:hover {
+  color: var(--color-accent-cold);
+}
+
+/* ---------- Carrousel "Les grandes étapes" (page d'accueil) ---------- */
+
+.etapes-carousel {
+  position: relative;
+  max-width: 32rem;
+  margin: var(--space-4) 0 0;
+}
+
+.etapes-carousel-img {
+  width: 100%;
+  height: 22rem;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}
+
+.etapes-carousel-annee {
+  position: absolute;
+  bottom: var(--space-2);
+  left: var(--space-2);
+  background: rgba(36, 40, 43, 0.75);
+  color: #FFFFFF;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+}
+
 /* ---------- Page contact ---------- */
 
 .contact-info {
