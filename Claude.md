@@ -15,17 +15,37 @@
   - **Phase 1 (faite le 2026-08-27)** : `index.html` et `histoire.html`, les deux pages dont le
     français venait d'être validé par Nicole/Gérald. Fichiers : `en/index.html`,
     `en/histoire.html`, `de/index.html`, `de/histoire.html`.
-  - **Phase 2 (à faire)** : `newsletter.html`, `rapports.html`, `contact.html`, `don.html` dans
-    les deux langues, une fois la phase 1 validée.
+  - **Phase 2 (faite le 2026-08-30)** : `newsletter.html`, `rapports.html`, `contact.html`,
+    `don.html` traduites en anglais et allemand (8 nouveaux fichiers). Décision d'Adrien de
+    lancer la phase 2 sans attendre une relecture de la phase 1 : il a déjà prévenu Nicole/Gérald
+    que les traductions ne sont pas certifiées et seront corrigées au fil de l'eau, donc pas
+    besoin d'un point de blocage intermédiaire. Le site est maintenant intégralement traduit
+    dans les 3 langues, plus de mélange FR/EN/DE dans la navigation
+  - **Piège évité de justesse en phase 2** : `js/rapports.js` avait le même problème de chemin
+    relatif que `photos-accueil.js`/`histoire-carousel.js` en phase 1 (`'assets/rapports/' +
+    fichier`, qui aurait pointé vers `/en/assets/rapports/...` depuis `en/rapports.html`).
+    Corrigé en chemin absolu avant même de publier la page anglaise, donc jamais cassé en
+    pratique. Le libellé "Rapport annuel (PDF)" de chaque carte était aussi codé en dur en
+    français ; rendu traduisible via un petit dictionnaire `rapportsLabelTextes` (même principe
+    que les autres scripts partagés fr/en/de)
+  - Formulaire newsletter sur `en/`/`de/` : poste vers la même liste Brevo unique ("Newsletter
+    site web"), pas de liste séparée par langue. Le champ caché `locale` est bien mis à jour
+    (`en`/`de`) pour refléter la langue de la page, mais **le contenu de l'e-mail de
+    confirmation double opt-in reste en français** : le template Brevo sélectionné est unique,
+    pas encore décliné par langue. Détail mineur, à améliorer plus tard si ça pose souci (créer
+    des templates par langue dans Brevo et les faire correspondre à `locale`)
+  - Formulaire contact sur `en/`/`de/` : garde le même `name="contact"` que la version française,
+    volontairement, pour que toutes les soumissions (quelle que soit la langue de la page)
+    atterrissent dans le même formulaire Netlify plutôt que d'en créer un par langue
 - Sélecteur de langue : `<li class="lang-switch">` ajouté à la fin de la liste `.main-nav ul`
   sur chaque page (donc il s'affiche aussi dans le menu mobile, sans code supplémentaire). Trois
   liens FR/EN/DE, la langue courante marquée `aria-current="true"`. Chaque page doit lister ses
   propres liens en dur (site codé à la main, pas de génération dynamique) : depuis la racine,
   les liens vers `en/`/`de/` sont relatifs à ce sous-dossier ; depuis `en/`/`de/`, le lien FR
   remonte d'un niveau (`../index.html`).
-- **Pages pas encore traduites** : depuis `en/`/`de/`, les liens de nav vers newsletter/rapports/
-  contact/don pointent vers les pages françaises à la racine (`../newsletter.html`, etc.), en
-  attendant la phase 2. Mélange de langues temporaire et assumé, pas un bug.
+- ~~Pages pas encore traduites~~ **Toutes les pages sont traduites depuis le 2026-08-30** (voir
+  phase 2 ci-dessus). Les liens de nav depuis `en/`/`de/` pointent maintenant vers les versions
+  traduites dans le même sous-dossier, plus vers la racine française.
 - **Piège technique rencontré** : `js/photos-accueil.js` et `js/histoire-carousel.js`
   construisaient un chemin d'image relatif à la page HTML (`'assets/img/...'`). Depuis
   `en/index.html`, ce chemin relatif pointait vers `/en/assets/img/...` (inexistant) au lieu de

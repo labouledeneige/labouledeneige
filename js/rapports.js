@@ -1,5 +1,5 @@
 // Liste des rapports annuels.
-// Pas de rapport 2001 : l'association a été fondée le 1er novembre 2001,
+// Pas de rapport 2001 : l'association a été fondée le 30 novembre 2001,
 // le premier rapport annuel complet date de 2002.
 // Pour ajouter un rapport : déposer le PDF dans assets/rapports/
 // puis ajouter une ligne { year: ..., file: '...' } ci-dessous.
@@ -30,14 +30,23 @@ var rapports = [
   { year: 2002, file: 'rapport-2002.pdf' }
 ];
 
+var rapportsLabelTextes = {
+  fr: 'Rapport annuel (PDF)',
+  en: 'Annual report (PDF)',
+  de: 'Jahresbericht (PDF)'
+};
+
 document.addEventListener('DOMContentLoaded', function () {
   var grid = document.querySelector('.rapports-grid');
   if (!grid) return;
 
+  var langue = document.documentElement.lang || 'fr';
+  var texteLabel = rapportsLabelTextes[langue] || rapportsLabelTextes.fr;
+
   rapports.forEach(function (rapport) {
     var link = document.createElement('a');
     link.className = 'rapport-card';
-    link.href = 'assets/rapports/' + rapport.file;
+    link.href = '/assets/rapports/' + rapport.file;
     link.target = '_blank';
     link.rel = 'noopener';
 
@@ -47,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var label = document.createElement('span');
     label.className = 'label';
-    label.textContent = 'Rapport annuel (PDF)';
+    label.textContent = texteLabel;
 
     link.appendChild(year);
     link.appendChild(label);
