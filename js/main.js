@@ -44,9 +44,10 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-// Envoi des formulaires Netlify en AJAX, avec message de confirmation sans rechargement de page
+// Envoi des formulaires en AJAX (Netlify Forms pour contact, Brevo pour la newsletter),
+// avec message de confirmation sans rechargement de page
 document.addEventListener('DOMContentLoaded', function () {
-  var forms = document.querySelectorAll('form[data-netlify]');
+  var forms = document.querySelectorAll('form[data-ajax-form]');
 
   forms.forEach(function (form) {
     var success = form.parentElement.querySelector('.form-success');

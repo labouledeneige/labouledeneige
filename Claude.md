@@ -124,13 +124,40 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
      confirmé avec Adrien, le carrousel affiche simplement toutes les photos disponibles dans
      l'ordre, années répétées comprises, sans chercher à en garder une seule par année
 2. **Page newsletter** — inscription (formulaire simple email), éventuellement archive des newsletters passées
-   - Le formulaire capture les inscrits via Netlify Forms (pas de vraie liste de diffusion). Décision de base : au moment du premier envoi, exporter le CSV des inscrits depuis Netlify et l'importer dans un outil d'e-mailing gratuit (Brevo ou Mailchimp), qui gère la désinscription et l'envoi en masse. Pas d'automatisation "détection de fichier → envoi automatique" : trop d'infrastructure à maintenir pour 2-3 envois par an, et pas d'étape de relecture avant envoi
-   - **2026-08-10** : option discutée avec Adrien pour supprimer même cette étape d'export manuel :
-     brancher directement le formulaire d'inscription du site sur le formulaire natif de Brevo, pour
-     que les inscrits atterrissent tout de suite dans la liste Brevo, sans passer par Netlify Forms
-     ni export CSV. Pas encore implémenté, en attente que Nicole/Gérald créent leur compte Brevo
-     (voir question "Brevo" dans Infrastructure technique)
-   - Formulaires newsletter et contact soumis en AJAX (`js/main.js`) avec message de confirmation affiché à la place du formulaire, sans rechargement de page. Ne fonctionne que sur un vrai déploiement Netlify (le POST est traité par Netlify au build, pas en local)
+   - ~~Le formulaire capture les inscrits via Netlify Forms~~ **Remplacé le 2026-08-30** : le
+     formulaire d'inscription poste maintenant directement vers Brevo, plus besoin d'export
+     CSV manuel ni de Netlify Forms pour la newsletter (contact.html reste sur Netlify Forms,
+     lui). Compte Brevo créé et connecté par Nicole/Gérald sur l'ordinateur d'Adrien, liste
+     dédiée "Newsletter site web" (dossier "Your First Folder" par défaut du compte). Recette
+     suivie : Marketing → Formulaires → Pleine page/intégré → conception (champ Captcha
+     supprimé du formulaire Brevo, icône poubelle qui apparaît au survol en haut à droite du
+     bloc sélectionné — pas évident à trouver) → Listes (nouvelle liste créée plutôt que
+     réutiliser "Votre première liste" par défaut) → Paramètres : **double opt-in gardé**
+     (template de confirmation par défaut, aucune case supplémentaire cochée), décision prise
+     avec Adrien pour répondre à la question LPD suisse en attente (voir "Mentions légales /
+     confidentialité" plus bas) plutôt que pour la conformité seule : le double opt-in donne une
+     preuve de consentement explicite, et le coût en friction est faible (un clic, geste connu)
+     vu le faible volume d'envois (2-3/an) → Partager → onglet "HTML simple", code récupéré et
+     les éléments utiles branchés sur notre formulaire déjà stylé (action = URL unique
+     `sibforms.com/serve/...`, champ `name="EMAIL"`, honeypot `name="email_address_check"`
+     réutilisant notre `.form-honeypot` existant plutôt que le CSS de Brevo, champs cachés
+     `locale`/`html_type`). Tout le reste du code généré par Brevo (styles, police Roboto,
+     structure de formulaire) a été jeté
+   - **Vérification technique faite avant de coder** : les deux formulaires du site postent en
+     AJAX (`fetch`) pour éviter un rechargement de page, mais Brevo est un domaine différent
+     (`sibforms.com`) contrairement à Netlify (même origine). Risque de blocage CORS testé
+     concrètement (petite page de test + Playwright, requête réelle vers l'URL Brevo) avant
+     d'écrire le code définitif : Brevo répond avec un en-tête `Access-Control-Allow-Origin` qui
+     reflète dynamiquement l'origine de la requête, donc `fetch()` fonctionne sans contournement
+     particulier (pas besoin de la technique classique "form target=iframe caché" envisagée un
+     temps en cas d'échec du test)
+   - Formulaires newsletter et contact soumis en AJAX (`js/main.js`, sélecteur générique
+     `form[data-ajax-form]` posé sur les deux formulaires) avec message de confirmation affiché
+     à la place du formulaire, sans rechargement de page. Le formulaire contact garde en plus
+     `data-netlify="true" netlify-honeypot="bot-field"` (nécessaire à Netlify pour détecter le
+     formulaire au build) et ne fonctionne donc que sur un vrai déploiement Netlify ; le
+     formulaire newsletter (Brevo) fonctionne lui même en local puisque le POST part
+     directement vers un service externe
 3. **Page rapports annuels** — rapports PDF fournis par le client, organisés par année
    - Grille de "cartes-année", du plus récent au plus ancien
    - Chaque carte = année en évidence + éventuellement vignette PDF + lien qui ouvre le PDF dans un nouvel onglet
@@ -413,28 +440,16 @@ Réunion prévue le jeudi 2026-08-06.
   "Créer une adresse mail" renvoyait en boucle vers un écran de confirmation de commande plutôt
   que d'ouvrir un formulaire ; la finalisation s'est faite via un lien reçu par e-mail
   d'Infomaniak, pas entièrement dans l'interface web
-- **Brevo (ou Mailchimp)** : même logique que GitHub/Netlify, le compte doit appartenir à
-  Nicole/Gérald, pas à Adrien. Ont-ils une préférence entre les deux outils ? Une fois le compte
-  créé de leur côté, il suffit qu'ils transmettent à Adrien le code d'intégration du formulaire
-  (ou la clé API) pour brancher directement le formulaire newsletter du site dessus : les
-  inscrits arrivent alors automatiquement dans leur liste, sans export CSV manuel à chaque envoi
+- ~~Brevo (ou Mailchimp)~~ **Résolu le 2026-08-30** : compte Brevo créé par Nicole/Gérald,
+  connecté sur l'ordinateur d'Adrien, formulaire branché directement sur `newsletter.html` (voir
+  détail dans "Structure du site", point 2, page newsletter). Le compte de test personnel
+  d'Adrien du 2026-08-11 (ci-dessous, gardé pour mémoire) n'est plus utilisé, à supprimer.
   - **2026-08-11** : Adrien a créé un compte Brevo gratuit personnel pour tester l'interface avant
     d'en parler à Nicole/Gérald. Ce compte de test doit être supprimé une fois l'exploration
     terminée, il ne doit pas devenir le compte définitif de l'association par facilité. Free plan
     Brevo vérifié le 2026-08-10 : 300 e-mails/jour, contacts illimités, aucune installation
     (100% web), mention "envoyé avec Brevo" dans les e-mails sauf plan payant. Largement
     suffisant pour 2-3 envois par an
-  - **Recette d'intégration testée le 2026-08-11** (à refaire avec le vrai compte de Nicole/Gérald
-    le moment venu) : dans Brevo, Marketing → Formulaires → Créer un formulaire d'inscription →
-    choisir/créer une liste → étape "Partager" → onglet "HTML simple". Le code généré contient
-    tout le style Brevo (polices, couleurs, `sib-styles.css`) à ignorer complètement : on garde
-    uniquement notre formulaire déjà stylé sur `newsletter.html` et on y branche seulement
-    l'`action` du `<form>` (URL unique du type `https://xxxx.sibforms.com/serve/...`), le nom du
-    champ e-mail (`name="EMAIL"`, en majuscules), le champ piège anti-spam déjà fourni par Brevo
-    (`name="email_address_check"`, équivalent à notre honeypot Netlify actuel, donc pas besoin du
-    reCAPTCHA que Brevo recommande par défaut), et les deux champs cachés `locale` et `html_type`.
-    Remplacera le `data-netlify="true"` actuel du formulaire newsletter par un POST direct vers
-    Brevo
 - **Notifications des formulaires** : qui doit recevoir un e-mail à chaque nouvelle inscription
   newsletter ou message de contact reçu via Netlify Forms ? Nicole, Gérald, les deux ?
 - **Mentions légales / confidentialité** : le site collecte des e-mails via les formulaires,

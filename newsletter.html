@@ -40,15 +40,16 @@
           <h1>La newsletter de l'association</h1>
           <p>Deux à trois fois par an, nous partageons l'avancée des projets au Burkina Faso : ce qui a été fait, ce qui reste à faire, et comment vos dons ont été utilisés. Pas de spam, juste des nouvelles concrètes du terrain.</p>
 
-          <form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-            <input type="hidden" name="form-name" value="newsletter">
+          <form name="newsletter" method="POST" action="https://62efdeae.sibforms.com/serve/MUIFAC-tHB2gQdn38XUOrgEWPU1R4FuPFPOfFLY9lw_l2ko9K9f7_uHmqr9phWttV0StoZQx3BhKhXcbFIRBeoAn8MuakupdlPzlgGDH00WyqzfeErdz4JWg5Gc37aR0kgz3iGbwrYRyT-WDYl3NcL7FfMM0XY2P87potKG8PqOKKbesgDpj-6gaFGmkTKnHXm5cru4eU-trPHKQpw==" data-ajax-form>
             <p class="form-honeypot">
-              <label>Ne pas remplir si vous êtes humain : <input name="bot-field"></label>
+              <label>Ne pas remplir si vous êtes humain : <input name="email_address_check"></label>
             </p>
+            <input type="hidden" name="locale" value="fr">
+            <input type="hidden" name="html_type" value="simple">
 
             <div class="form-field">
               <label for="email">Adresse e-mail</label>
-              <input type="email" id="email" name="email" required placeholder="prenom.nom@exemple.ch">
+              <input type="email" id="email" name="EMAIL" required placeholder="prenom.nom@exemple.ch">
             </div>
 
             <button type="submit" class="btn">S'inscrire</button>
@@ -56,7 +57,7 @@
           </form>
 
           <div class="form-success" hidden>
-            <p><strong>Merci, votre inscription est enregistrée.</strong> Vous recevrez la prochaine newsletter directement par e-mail.</p>
+            <p><strong>Merci !</strong> Vous allez recevoir un e-mail de confirmation : cliquez sur le lien qu'il contient pour valider votre inscription.</p>
           </div>
           <div class="form-error" hidden>
             <p>L'envoi a échoué. Vous pouvez réessayer, ou nous écrire directement à <a href="mailto:contact@labouledeneige.ch">contact@labouledeneige.ch</a>.</p>
