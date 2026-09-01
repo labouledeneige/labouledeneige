@@ -772,6 +772,20 @@ section {
   border-radius: 4px;
 }
 
+/* Aperçu (première page) de la dernière newsletter envoyée, sur newsletter.html.
+   Cliquable, ouvre le PDF complet dans un nouvel onglet comme les cartes de rapports */
+.newsletter-preview-img {
+  width: 100%;
+  display: block;
+  border: 1.5px solid var(--color-border);
+  border-radius: 4px;
+  transition: border-color 0.15s ease;
+}
+
+.newsletter-preview:hover .newsletter-preview-img {
+  border-color: var(--color-accent-warm);
+}
+
 /* ---------- Page contact ---------- */
 
 .contact-info {

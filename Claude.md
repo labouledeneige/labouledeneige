@@ -228,6 +228,15 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
      "September 2026" selon fr/en/de). CSS `.newsletters-grid`/`.newsletter-card` factorisé avec
      `.rapports-grid`/`.rapport-card` (sélecteurs combinés, même style visuel), avec une taille de
      police réduite pour le libellé "mois année" qui est plus long qu'une simple année
+   - **Visuel de la newsletter, même jour** : l'encart "Visuel ou capture d'une newsletter
+     précédente à intégrer ici" (placeholder d'origine, à côté du formulaire d'inscription) laissé
+     vide dans la version finale aurait été moins engageant. Remplacé par un vrai aperçu : première
+     page du PDF reçu convertie en image (`assets/img/newsletter-apercu.jpg`, généré via PyMuPDF,
+     zoom ×2.2 pour rester net), cliquable et ouvre le PDF complet comme les cartes de rapports.
+     Pas automatisé : à chaque nouvelle newsletter, il faudra régénérer cette image à partir de la
+     première page du nouveau PDF (petit script Python à une ligne, PyMuPDF déjà utilisé ailleurs
+     dans ce projet pour la manipulation de PDF) — étape manuelle en plus du dépôt de fichier +
+     ligne dans `js/newsletters.js`, mais reste un geste de quelques secondes pour 2-3 envois/an
 3. **Page rapports annuels** — rapports PDF fournis par le client, organisés par année
    - Grille de "cartes-année", du plus récent au plus ancien
    - Chaque carte = année en évidence + éventuellement vignette PDF + lien qui ouvre le PDF dans un nouvel onglet
