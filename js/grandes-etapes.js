@@ -38,9 +38,9 @@ var grandesEtapesPhotos = [
   { annee: 2022, fichier: '2022 Distribution de vivres suite à une famine.jpg' },
   { annee: 2022, fichier: '2022 Don du riz suite à la famine.jpg' },
   { annee: 2023, fichier: '2023 Des études qui continuent malgré l\'insécurité.jpg' },
-  { annee: 2024, fichier: '2024 Riz pour élèves scolarisés.jpg', position: 'top' },
+  { annee: 2024, fichier: '2024 Riz pour élèves scolarisés.jpg', fit: 'contain' },
   { annee: 2025, fichier: '2025 Formation en coupe-couture.jpg' },
-  { annee: 2025, fichier: '2025 Maraîchage.jpeg' }
+  { annee: 2025, fichier: '2025 Maraîchage.jpeg', fit: 'contain' }
 ];
 
 var grandesEtapesTextes = {
