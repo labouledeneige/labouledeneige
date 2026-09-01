@@ -720,6 +720,9 @@ section {
   object-fit: cover;
   border-radius: 4px;
   display: block;
+  /* Visible seulement pour les photos en object-fit: contain (ex. 2010, format
+     carré recadré serré en cover) : comble les bandes vides sans couleur criarde */
+  background: var(--color-bg-alt);
 }
 
 .etapes-carousel-annee {
