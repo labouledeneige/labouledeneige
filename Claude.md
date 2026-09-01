@@ -172,6 +172,16 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
        l'accueil), pas un oubli technique. À clarifier avec eux : soit ils n'ont pas vu ce lien,
        soit ils souhaitent malgré tout un accès direct depuis le menu — décision à prendre
        ensemble avant de coder quoi que ce soit ici
+   - **Nouveau passage sur le lien d'aperçu, même jour** : deux photos supplémentaires touchées
+     par le même problème que 2010 malgré le premier correctif `position: top` : 2025
+     (Maraîchage, tête totalement coupée cette fois, pas juste rognée) et 2024 (tête bien
+     visible depuis le correctif, mais cadrage jugé "trop proche" comme 2010 l'avait été). Point
+     commun aux 3 (2010, 2024, 2025) : ce sont des photos très hautes (portrait ou carrée)
+     forcées dans un cadre large et bas, `cover` doit alors zoomer énormément quel que soit le
+     point d'ancrage choisi. Les deux basculées en `fit: 'contain'` plutôt que `position: 'top'`
+     (voir définition du champ `fit` plus haut) : photos entières visibles, plus aucun recadrage.
+     `position: 'top'` reste correct pour 2003 (portrait mais moins extrême, jamais signalé comme
+     trop serré) : à surveiller si un jour ça revient dans un retour
 2. **Page newsletter** — inscription (formulaire simple email), éventuellement archive des newsletters passées
    - ~~Le formulaire capture les inscrits via Netlify Forms~~ **Remplacé le 2026-08-30** : le
      formulaire d'inscription poste maintenant directement vers Brevo, plus besoin d'export
