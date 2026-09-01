@@ -553,15 +553,17 @@ section {
   margin-bottom: 0.25rem;
 }
 
-/* ---------- Page rapports annuels ---------- */
+/* ---------- Page rapports annuels + archives newsletter (même style de grille) ---------- */
 
-.rapports-grid {
+.rapports-grid,
+.newsletters-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: var(--space-3);
 }
 
-.rapport-card {
+.rapport-card,
+.newsletter-card {
   border: 1.5px solid var(--color-border);
   border-radius: 4px;
   padding: var(--space-3);
@@ -571,21 +573,31 @@ section {
   transition: border-color 0.15s ease;
 }
 
-.rapport-card:hover {
+.rapport-card:hover,
+.newsletter-card:hover {
   border-color: var(--color-accent-warm);
   color: var(--color-text);
 }
 
-.rapport-card .year {
+.rapport-card .year,
+.newsletter-card .year {
   font-family: var(--font-heading);
   font-size: 1.75rem;
   font-weight: 600;
   display: block;
 }
 
-.rapport-card .label {
+.rapport-card .label,
+.newsletter-card .label {
   font-size: 0.85rem;
   color: var(--color-text-muted);
+}
+
+/* La carte newsletter affiche "mois année" (plus long qu'une simple année),
+   police réduite et majuscule initiale pour que ça tienne sur une ligne */
+.newsletter-card .year {
+  font-size: 1.25rem;
+  text-transform: capitalize;
 }
 
 /* ---------- Page newsletter ---------- */

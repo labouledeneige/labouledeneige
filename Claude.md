@@ -143,6 +143,26 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
      2005, 2013, 2014, 2019, 2020 manquantes) et certaines en ont deux (2004, 2022, 2025) :
      confirmé avec Adrien, le carrousel affiche simplement toutes les photos disponibles dans
      l'ordre, années répétées comprises, sans chercher à en garder une seule par année
+   - **Retour de Nicole/Gérald le 2026-08-30** (après avoir vu le lien d'aperçu Netlify), premiers
+     retours de relecture reçus par WhatsApp et e-mail :
+     - Recadrage : sur 3 photos (2003, 2010, 2024), le visage était coupé en haut du cadre à
+       cause du recadrage automatique `object-fit: cover` centré. Ajout d'un champ optionnel
+       `position` dans `grandesEtapesPhotos` (`js/grandes-etapes.js`), qui applique
+       `object-position: top` à ces 3 entrées plutôt que le centrage par défaut. Vérifié au
+       rendu : les 3 têtes sont maintenant entièrement visibles
+     - Ordre des 2 photos de 2004 inversé : "le tracteur" passe avant "la charrue" (remarque de
+       Gérald : on ne met pas la charrue avant les bœufs)
+     - Texte 2010 (frise "Les grandes étapes", `index.html`) : "Achat de livres" → "Achat de
+       livres **scolaires**" (mot manquant), répercuté sur les traductions en/de
+     - Texte 2023 : reformulé selon le texte exact fourni par Nicole/Gérald, qui ajoute une
+       précision importante absente jusque-là ("...grâce à leur courage, malgré l'insécurité qui
+       règne à Kompienga"), répercuté sur les traductions en/de
+     - Question en suspens (pas une correction de code) : Nicole signale "il manque l'onglet
+       Notre histoire". C'est un choix assumé depuis le 2026-08-10 (page volontairement hors du
+       nav principal, accessible via le lien en bas de la frise "Les grandes étapes" sur
+       l'accueil), pas un oubli technique. À clarifier avec eux : soit ils n'ont pas vu ce lien,
+       soit ils souhaitent malgré tout un accès direct depuis le menu — décision à prendre
+       ensemble avant de coder quoi que ce soit ici
 2. **Page newsletter** — inscription (formulaire simple email), éventuellement archive des newsletters passées
    - ~~Le formulaire capture les inscrits via Netlify Forms~~ **Remplacé le 2026-08-30** : le
      formulaire d'inscription poste maintenant directement vers Brevo, plus besoin d'export
@@ -178,6 +198,17 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
      formulaire au build) et ne fonctionne donc que sur un vrai déploiement Netlify ; le
      formulaire newsletter (Brevo) fonctionne lui même en local puisque le POST part
      directement vers un service externe
+   - **2026-08-30** : première vraie newsletter reçue de Nicole/Gérald (`Newsletter Septembre
+     2026.pdf`, déposée par Adrien dans un dossier `assets/newsletter/`). Renommé en chemin/nom
+     cohérents avec le reste du site : `assets/newsletters/newsletter-2026-09.pdf` (dossier au
+     pluriel comme `assets/rapports/`, nom en `AAAA-MM` pour trier chronologiquement et gérer
+     plusieurs envois par an). Section "Newsletters précédentes" (jusque-là un texte de
+     remplacement) remplacée par une vraie grille, même principe que la page rapports :
+     `js/newsletters.js` (tableau `newsletters` de `{ annee, mois, fichier }`, dictionnaire de
+     noms de mois par langue `moisTextes` pour afficher "Septembre 2026" / "September 2026" /
+     "September 2026" selon fr/en/de). CSS `.newsletters-grid`/`.newsletter-card` factorisé avec
+     `.rapports-grid`/`.rapport-card` (sélecteurs combinés, même style visuel), avec une taille de
+     police réduite pour le libellé "mois année" qui est plus long qu'une simple année
 3. **Page rapports annuels** — rapports PDF fournis par le client, organisés par année
    - Grille de "cartes-année", du plus récent au plus ancien
    - Chaque carte = année en évidence + éventuellement vignette PDF + lien qui ouvre le PDF dans un nouvel onglet
