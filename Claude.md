@@ -303,6 +303,19 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
        Placement choisi par Claude et validé par Adrien ("je te laisse gérer") : section convertie
        en `split-section split-photo` avec `<div class="photo-carousel" data-section="travail">`,
        cohérent thématiquement ("séance de travail" ↔ "notre façon de travailler")
+   - **Retour d'Adrien le 2026-08-30** (après un nouveau passage sur l'aperçu) : les photos
+     "voyage" et "premierPas" (au format paysage classique, ratio ~1.5) paraissaient incomplètes,
+     recadrées trop serré sur les côtés — la femme partiellement coupée sur la photo de la
+     charrette, par exemple. Cause : `.split-photo` étire la colonne photo à la hauteur exacte de
+     la colonne de texte en face (voir correctif ci-dessus), et un texte de 3 paragraphes donne
+     une colonne bien plus haute que large, forçant `object-fit: cover` à rogner fortement les
+     bords d'une photo panoramique pour remplir ce format presque carré. Contrairement au cas
+     "Quatre axes d'action" (déjà traité avec "voir plus"), ici pas besoin de replier du texte :
+     un simple plafond `max-height: 30rem` sur `.photo-carousel`, son placeholder et
+     `.carousel-img` suffit. Au-delà de ce plafond, la colonne photo s'arrête et le texte continue
+     normalement dans sa propre colonne : pas de "trou" visible, rien ne matérialise cet espace
+     (ni bordure ni fond différent). Résultat vérifié sur les 5 sections de la page : nettement
+     plus de contexte visible sur "voyage" et "premierPas", aucune régression sur les 3 autres
 7. **Page d'attente (`bientot-disponible.html`)** — pas un vrai contenu du site, page autonome
    créée le 2026-08-10 en vue de l'enregistrement du domaine `labouledeneige.ch` prévu le
    2026-08-11. Inspirée d'une page similaire faite par Adrien pour un autre client

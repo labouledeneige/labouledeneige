@@ -624,21 +624,30 @@ section {
 
 /* ---------- Carrousel photo (page histoire) ---------- */
 
+/* max-height : évite qu'une photo au format paysage (la plupart des photos
+   du site) soit étirée sur toute la hauteur d'une colonne de texte très
+   longue et donc recadrée trop serré sur les côtés par object-fit: cover.
+   Passé ce plafond, la colonne photo s'arrête et le texte continue
+   simplement en dessous dans sa propre colonne, sans "trou" visuel (rien
+   n'entoure cet espace, c'est juste le fond de la section) */
 .photo-carousel {
   position: relative;
   min-height: 18rem;
   height: 100%;
+  max-height: 30rem;
 }
 
 .photo-carousel .placeholder-visual {
   min-height: 18rem;
   height: 100%;
+  max-height: 30rem;
 }
 
 .carousel-img {
   width: 100%;
   height: 100%;
   min-height: 18rem;
+  max-height: 30rem;
   object-fit: cover;
   border-radius: 4px;
 }
