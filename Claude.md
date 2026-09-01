@@ -150,6 +150,15 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
        `position` dans `grandesEtapesPhotos` (`js/grandes-etapes.js`), qui applique
        `object-position: top` à ces 3 entrées plutôt que le centrage par défaut. Vérifié au
        rendu : les 3 têtes sont maintenant entièrement visibles
+     - **Suite le même jour** : même après ce correctif, la photo 2010 (Alain dans la neige,
+       format carré 4000×4000) restait jugée "trop proche" une fois forcée dans le cadre large
+       et bas du carrousel — `cover` zoome nécessairement fort sur un carré inséré dans un cadre
+       très rectangulaire, quelle que soit la position choisie. Ajout d'un second champ optionnel
+       `fit` (en plus de `position`) qui bascule cette photo en `object-fit: contain` : la photo
+       entière est visible (cairn, montagne, contexte), avec des bandes latérales comblées par
+       `--color-bg-alt` plutôt qu'une couleur criarde. `.etapes-carousel-img` a une couleur de
+       fond en permanence pour cette raison, invisible sur toutes les photos en `cover` (qui
+       remplissent tout le cadre) et utile uniquement pour celles en `contain`
      - Ordre des 2 photos de 2004 inversé : "le tracteur" passe avant "la charrue" (remarque de
        Gérald : on ne met pas la charrue avant les bœufs)
      - Texte 2010 (frise "Les grandes étapes", `index.html`) : "Achat de livres" → "Achat de

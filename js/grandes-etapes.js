@@ -11,6 +11,13 @@
 // cadre (object-position CSS). Utile quand le cadrage automatique par défaut
 // ("center", le centre de la photo) coupe une tête en haut de l'image ; dans
 // ce cas "top" garde le haut de la photo intact et rogne plutôt le bas.
+//
+// `fit` (optionnel) : "contain" au lieu du recadrage "cover" par défaut,
+// pour montrer la photo entière sans rien couper (au prix de bandes vides
+// sur les côtés ou en haut/bas, comblées par la couleur de fond du cadre).
+// Utile pour une photo au format très différent du cadre (ex. 2010, carrée,
+// où "cover" zoomait trop fort et donnait une impression de photo "trop
+// proche" une fois recadrée dans un cadre large et bas).
 var grandesEtapesPhotos = [
   { annee: 2002, fichier: '2002 Achat des boeufs pour les labours à Kompienga en 2002.jpg' },
   { annee: 2003, fichier: '2003 André Fidel et Esther 1er jour d\'école à Mahadaga.jpg', position: 'top' },
@@ -20,7 +27,7 @@ var grandesEtapesPhotos = [
   { annee: 2007, fichier: '2007 Studio d\'enregistermrnt à Fada N\'Gourma.jpg' },
   { annee: 2008, fichier: '2008 Décortiqueuse.jpg' },
   { annee: 2009, fichier: '2009 Collége  4 salles de classe.jpg' },
-  { annee: 2010, fichier: '2010 Lors de son voyage en Suisse, Alain découvre la neige.jpg', position: 'top' },
+  { annee: 2010, fichier: '2010 Lors de son voyage en Suisse, Alain découvre la neige.jpg', fit: 'contain' },
   { annee: 2011, fichier: '2011 Scolarisation de 85 enfants dans la région de l\'est.jpg' },
   { annee: 2012, fichier: '2012 Les élèves peuvent faire leurs devoirs au collège le soir jusq\'à 22h00.jpg' },
   { annee: 2015, fichier: '2015 Envoi du container au Burkina Faso.jpg' },
@@ -76,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var photo = grandesEtapesPhotos[index];
     img.src = '/assets/img/grandes-etapes/' + photo.fichier;
     img.style.objectPosition = photo.position ? photo.position : 'center';
+    img.style.objectFit = photo.fit ? photo.fit : 'cover';
     annee.textContent = photo.annee;
   }
   afficher();
