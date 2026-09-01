@@ -90,7 +90,10 @@
       <div class="container">
         <p class="eyebrow">Archives</p>
         <h2>Newsletters précédentes</h2>
-        <p>[À compléter une fois les premières newsletters envoyées : liste ou grille de liens vers les archives, sur le même principe que la page des rapports annuels.]</p>
+
+        <div class="newsletters-grid">
+          <!-- Grille générée dynamiquement par js/newsletters.js à partir de la liste des envois. -->
+        </div>
       </div>
     </section>
 
@@ -129,6 +132,7 @@
   </button>
 
   <script src="js/main.js"></script>
+  <script src="js/newsletters.js"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

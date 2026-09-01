@@ -6,16 +6,21 @@
 // puis ajouter une ligne au tableau ci-dessous, dans l'ordre chronologique.
 // Plusieurs photos pour la même année sont possibles, elles s'affichent
 // simplement l'une après l'autre.
+//
+// `position` (optionnel) : ajuste le recadrage vertical de la photo dans le
+// cadre (object-position CSS). Utile quand le cadrage automatique par défaut
+// ("center", le centre de la photo) coupe une tête en haut de l'image ; dans
+// ce cas "top" garde le haut de la photo intact et rogne plutôt le bas.
 var grandesEtapesPhotos = [
   { annee: 2002, fichier: '2002 Achat des boeufs pour les labours à Kompienga en 2002.jpg' },
-  { annee: 2003, fichier: '2003 André Fidel et Esther 1er jour d\'école à Mahadaga.jpg' },
-  { annee: 2004, fichier: '2004 Charrue à Kompienga 2005.jpg' },
+  { annee: 2003, fichier: '2003 André Fidel et Esther 1er jour d\'école à Mahadaga.jpg', position: 'top' },
   { annee: 2004, fichier: '2004 Le tracteur en 2005 laboure plus de 250 hectares pour tout le village.jpg' },
+  { annee: 2004, fichier: '2004 Charrue à Kompienga 2005.jpg' },
   { annee: 2006, fichier: '2006 Tracteur avec sa remorque à Kompienga 2007.jpg' },
   { annee: 2007, fichier: '2007 Studio d\'enregistermrnt à Fada N\'Gourma.jpg' },
   { annee: 2008, fichier: '2008 Décortiqueuse.jpg' },
   { annee: 2009, fichier: '2009 Collége  4 salles de classe.jpg' },
-  { annee: 2010, fichier: '2010 Lors de son voyage en Suisse, Alain découvre la neige.jpg' },
+  { annee: 2010, fichier: '2010 Lors de son voyage en Suisse, Alain découvre la neige.jpg', position: 'top' },
   { annee: 2011, fichier: '2011 Scolarisation de 85 enfants dans la région de l\'est.jpg' },
   { annee: 2012, fichier: '2012 Les élèves peuvent faire leurs devoirs au collège le soir jusq\'à 22h00.jpg' },
   { annee: 2015, fichier: '2015 Envoi du container au Burkina Faso.jpg' },
@@ -26,7 +31,7 @@ var grandesEtapesPhotos = [
   { annee: 2022, fichier: '2022 Distribution de vivres suite à une famine.jpg' },
   { annee: 2022, fichier: '2022 Don du riz suite à la famine.jpg' },
   { annee: 2023, fichier: '2023 Des études qui continuent malgré l\'insécurité.jpg' },
-  { annee: 2024, fichier: '2024 Riz pour élèves scolarisés.jpg' },
+  { annee: 2024, fichier: '2024 Riz pour élèves scolarisés.jpg', position: 'top' },
   { annee: 2025, fichier: '2025 Formation en coupe-couture.jpg' },
   { annee: 2025, fichier: '2025 Maraîchage.jpeg' }
 ];
@@ -70,6 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function afficher() {
     var photo = grandesEtapesPhotos[index];
     img.src = '/assets/img/grandes-etapes/' + photo.fichier;
+    img.style.objectPosition = photo.position ? photo.position : 'center';
     annee.textContent = photo.annee;
   }
   afficher();
