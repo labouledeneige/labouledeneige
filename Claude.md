@@ -202,6 +202,28 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
      réutilisant notre `.form-honeypot` existant plutôt que le CSS de Brevo, champs cachés
      `locale`/`html_type`). Tout le reste du code généré par Brevo (styles, police Roboto,
      structure de formulaire) a été jeté
+   - **Panne de délivrabilité découverte et corrigée le 2026-09-01** : premier test réel par
+     Adrien (avant que le lien soit envoyé à Nicole/Gérald), aucun e-mail de confirmation reçu.
+     Diagnostic : Brevo → Transactionnel → Statistiques montrait 100% de "soft bounce" sur
+     l'e-mail "Valider votre inscription", malgré une réponse `success:true` du formulaire (donc
+     la requête arrivait bien, seul l'envoi de l'e-mail échouait). Cause : Brevo → Expéditeurs,
+     domaine, IP → Expéditeurs indiquait une signature DKIM "par défaut" (générique Brevo, pas
+     propre au domaine), ce qui se heurtait à la politique DMARC stricte déjà en place sur
+     `labouledeneige.ch` (`p=reject`, configurée par kSuite pour la messagerie). Résolu en
+     authentifiant le domaine dans Brevo (Expéditeurs, domaine, IP → Domaines → Ajouter un
+     domaine → méthode "Manuelle", Infomaniak n'étant pas dans la liste des fournisseurs pris en
+     charge par la méthode automatique) : 3 enregistrements DNS ajoutés dans la zone
+     `labouledeneige.ch` chez Infomaniak (TXT `@` de vérification + 2 CNAME `brevo1._domainkey`/
+     `brevo2._domainkey`), propagation confirmée en quelques minutes (vérifiée via `nslookup`
+     contre 8.8.8.8 avant même de retester dans Brevo). Le 4e enregistrement suggéré par Brevo
+     (TXT `_dmarc`) a été volontairement ignoré : un `_dmarc` existait déjà (plus strict, `p=reject`
+     vs `p=none` proposé par Brevo), le dupliquer aurait risqué de casser la validation DMARC
+     existante — pas nécessaire de toute façon, l'alignement DKIM à lui seul suffit à satisfaire
+     DMARC. Domaine authentifié avec succès dans Brevo. Test de confirmation reçu par Adrien
+     (dans Chrome ; un essai précédent dans un autre navigateur/onglet n'avait rien redonné en
+     logs, probablement une adresse déjà en attente de confirmation d'un essai antérieur plutôt
+     qu'un vrai second problème). Le formulaire newsletter est donc validé de bout en bout,
+     y compris la délivrabilité réelle, pas seulement le POST technique
    - **Vérification technique faite avant de coder** : les deux formulaires du site postent en
      AJAX (`fetch`) pour éviter un rechargement de page, mais Brevo est un domaine différent
      (`sibforms.com`) contrairement à Netlify (même origine). Risque de blocage CORS testé
