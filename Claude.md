@@ -316,6 +316,21 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
      normalement dans sa propre colonne : pas de "trou" visible, rien ne matérialise cet espace
      (ni bordure ni fond différent). Résultat vérifié sur les 5 sections de la page : nettement
      plus de contexte visible sur "voyage" et "premierPas", aucune régression sur les 3 autres
+   - **Suite le même jour** : le plafond fixe `max-height: 30rem` réglait bien le cas extrême
+     (texte très long), mais pour "voyage" et "premierPas" spécifiquement (photos au format
+     paysage classique ~3:2), il restait un problème sur une plage de largeurs d'écran entre le
+     passage 1/2 colonnes et le plein desktop (~800-1100px, un format d'écran d'ordinateur
+     courant) : à ces largeurs, la colonne photo devenait presque carrée voire plus haute que
+     large (mesuré : ratio jusqu'à 0.73 à 801px, alors que la photo elle-même est à 1.5), recadrant
+     une bonne partie des bords. Une personne sortait presque entièrement du cadre sur la photo
+     "premierPas" à ces largeurs (repéré par Adrien sur une capture). Remplacé le modèle
+     hauteur/plafond par `aspect-ratio: 3 / 2` pour ces 2 sections uniquement (`align-self: start`
+     pour sortir de l'étirement de `.split-photo`) : la boîte garde exactement le ratio de la
+     photo à n'importe quelle largeur d'écran, vérifié en scannant 9 largeurs de 375 à 1440px
+     (ratio resté à 1.5 partout, recadrage minimal). Les autres sections (`correspondance`,
+     `axes`, `travail`) gardent le modèle `max-height: 30rem` d'origine, non concernées par ce
+     problème (photos plus proches d'un ratio carré/portrait, où le plafond fixe fonctionne bien) :
+     à garder en tête si un jour elles montrent le même souci sur cette plage de largeurs
 7. **Page d'attente (`bientot-disponible.html`)** — pas un vrai contenu du site, page autonome
    créée le 2026-08-10 en vue de l'enregistrement du domaine `labouledeneige.ch` prévu le
    2026-08-11. Inspirée d'une page similaire faite par Adrien pour un autre client

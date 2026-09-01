@@ -652,6 +652,31 @@ section {
   border-radius: 4px;
 }
 
+/* "voyage" et "premierPas" : photos au format paysage classique (~3:2). Le
+   plafond fixe ci-dessus (30rem) donnait, sur certaines largeurs d'écran
+   entre le passage 1/2 colonnes et le plein desktop (~800-1100px), une
+   boîte presque carrée voire plus haute que large — bien plus serrée que
+   le ratio de la photo elle-même, recadrant une bonne partie des bords
+   (une personne sortait presque entièrement du cadre sur "premierPas").
+   Pour ces 2 sections seulement, ratio fixe plutôt qu'une hauteur plafond :
+   la boîte garde alors la forme de la photo à toute largeur d'écran */
+.photo-carousel[data-section="voyage"],
+.photo-carousel[data-section="premierPas"] {
+  align-self: start;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  aspect-ratio: 3 / 2;
+}
+
+.photo-carousel[data-section="voyage"] .carousel-img,
+.photo-carousel[data-section="premierPas"] .carousel-img {
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  aspect-ratio: 3 / 2;
+}
+
 .carousel-arrow {
   position: absolute;
   top: 50%;
