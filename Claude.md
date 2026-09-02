@@ -166,12 +166,13 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
      - Texte 2023 : reformulé selon le texte exact fourni par Nicole/Gérald, qui ajoute une
        précision importante absente jusque-là ("...grâce à leur courage, malgré l'insécurité qui
        règne à Kompienga"), répercuté sur les traductions en/de
-     - Question en suspens (pas une correction de code) : Nicole signale "il manque l'onglet
-       Notre histoire". C'est un choix assumé depuis le 2026-08-10 (page volontairement hors du
-       nav principal, accessible via le lien en bas de la frise "Les grandes étapes" sur
-       l'accueil), pas un oubli technique. À clarifier avec eux : soit ils n'ont pas vu ce lien,
-       soit ils souhaitent malgré tout un accès direct depuis le menu — décision à prendre
-       ensemble avant de coder quoi que ce soit ici
+     - ~~Question en suspens : "il manque l'onglet Notre histoire"~~ **Résolu le 2026-09-02** :
+       Nicole/Gérald ont confirmé vouloir un accès direct depuis le menu malgré tout. Lien
+       "Notre histoire" ajouté au menu principal (juste après "L'association", avant
+       "Newsletter" — thématiquement un prolongement de la présentation de l'association) sur
+       les 18 pages du site (6 pages × fr/en/de), plus dans le pied de page de chaque page. Sur
+       `histoire.html` elle-même, le lien du pied de page est omis (même logique que
+       "L'association" absent du pied de page de `index.html` : pas de lien vers soi-même)
    - **Nouveau passage sur le lien d'aperçu, même jour** : deux photos supplémentaires touchées
      par le même problème que 2010 malgré le premier correctif `position: top` : 2025
      (Maraîchage, tête totalement coupée cette fois, pas juste rognée) et 2024 (tête bien
@@ -202,6 +203,28 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
      réutilisant notre `.form-honeypot` existant plutôt que le CSS de Brevo, champs cachés
      `locale`/`html_type`). Tout le reste du code généré par Brevo (styles, police Roboto,
      structure de formulaire) a été jeté
+   - **Panne de délivrabilité découverte et corrigée le 2026-09-01** : premier test réel par
+     Adrien (avant que le lien soit envoyé à Nicole/Gérald), aucun e-mail de confirmation reçu.
+     Diagnostic : Brevo → Transactionnel → Statistiques montrait 100% de "soft bounce" sur
+     l'e-mail "Valider votre inscription", malgré une réponse `success:true` du formulaire (donc
+     la requête arrivait bien, seul l'envoi de l'e-mail échouait). Cause : Brevo → Expéditeurs,
+     domaine, IP → Expéditeurs indiquait une signature DKIM "par défaut" (générique Brevo, pas
+     propre au domaine), ce qui se heurtait à la politique DMARC stricte déjà en place sur
+     `labouledeneige.ch` (`p=reject`, configurée par kSuite pour la messagerie). Résolu en
+     authentifiant le domaine dans Brevo (Expéditeurs, domaine, IP → Domaines → Ajouter un
+     domaine → méthode "Manuelle", Infomaniak n'étant pas dans la liste des fournisseurs pris en
+     charge par la méthode automatique) : 3 enregistrements DNS ajoutés dans la zone
+     `labouledeneige.ch` chez Infomaniak (TXT `@` de vérification + 2 CNAME `brevo1._domainkey`/
+     `brevo2._domainkey`), propagation confirmée en quelques minutes (vérifiée via `nslookup`
+     contre 8.8.8.8 avant même de retester dans Brevo). Le 4e enregistrement suggéré par Brevo
+     (TXT `_dmarc`) a été volontairement ignoré : un `_dmarc` existait déjà (plus strict, `p=reject`
+     vs `p=none` proposé par Brevo), le dupliquer aurait risqué de casser la validation DMARC
+     existante — pas nécessaire de toute façon, l'alignement DKIM à lui seul suffit à satisfaire
+     DMARC. Domaine authentifié avec succès dans Brevo. Test de confirmation reçu par Adrien
+     (dans Chrome ; un essai précédent dans un autre navigateur/onglet n'avait rien redonné en
+     logs, probablement une adresse déjà en attente de confirmation d'un essai antérieur plutôt
+     qu'un vrai second problème). Le formulaire newsletter est donc validé de bout en bout,
+     y compris la délivrabilité réelle, pas seulement le POST technique
    - **Vérification technique faite avant de coder** : les deux formulaires du site postent en
      AJAX (`fetch`) pour éviter un rechargement de page, mais Brevo est un domaine différent
      (`sibforms.com`) contrairement à Netlify (même origine). Risque de blocage CORS testé
@@ -237,6 +260,12 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
      première page du nouveau PDF (petit script Python à une ligne, PyMuPDF déjà utilisé ailleurs
      dans ce projet pour la manipulation de PDF) — étape manuelle en plus du dépôt de fichier +
      ligne dans `js/newsletters.js`, mais reste un geste de quelques secondes pour 2-3 envois/an
+   - **2026-09-02** : première mise à jour concrète de ce processus manuel. Nicole/Gérald ont
+     corrigé une phrase en première page (`newsletter-2026-09.pdf` remplacé, même nom de
+     fichier). Ancien fichier déplacé par Adrien vers `../La Boule de Neige - documents
+     internes/Newsletters (anciennes versions)/newsletter-2026-09-old.pdf` plutôt que laissé
+     dans les fichiers publics du site. Aperçu régénéré (`assets/img/newsletter-apercu.jpg`),
+     rien à changer côté `js/newsletters.js` puisque le nom de fichier n'a pas changé
 3. **Page rapports annuels** — rapports PDF fournis par le client, organisés par année
    - Grille de "cartes-année", du plus récent au plus ancien
    - Chaque carte = année en évidence + éventuellement vignette PDF + lien qui ouvre le PDF dans un nouvel onglet
@@ -435,6 +464,36 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
   bordure `#B7C4CC` (même teinte que la ligne de séparation du footer) sur `.form-field input` et
   `.form-field textarea` dans `css/style.css`. À garder en tête pour toute future couleur de fond
   très claire : vérifier le contraste des champs de formulaire, pas seulement le texte
+
+## SEO et partage sur les réseaux
+
+- **2026-08-30** : balises Open Graph et Twitter Card ajoutées sur les 19 pages du site
+  (`og:title`, `og:description`, `og:image` → `assets/img/logo.png`, `og:url`, `og:type`,
+  `og:site_name`, `og:locale` par langue) pour un aperçu correct (logo, titre, description) au
+  lieu d'un lien nu quand l'URL est partagée sur WhatsApp ou les réseaux. Chaque page réutilise
+  son propre `<title>`/`<meta name="description">` déjà en place, pas de texte dupliqué à
+  maintenir séparément
+- **2026-09-02** : avant la mise en ligne publique, ajout de trois éléments SEO qui manquaient
+  encore :
+  - `robots.txt` (autorise tout, référence le sitemap) et `sitemap.xml` (18 URL, les 6 pages ×
+    fr/en/de) à la racine du site
+  - `<link rel="canonical">` sur chaque page (pointe vers elle-même), pour éviter toute ambiguïté
+    si jamais une page était accessible par plusieurs URL
+  - `<link rel="alternate" hreflang="...">` (fr/en/de + x-default vers la version française) sur
+    les 18 pages : indique explicitement à Google que les versions fr/en/de sont des traductions
+    d'un même contenu plutôt que des pages distinctes, pour éviter tout souci de "contenu
+    dupliqué" et bien orienter chaque utilisateur vers la version dans sa langue depuis les
+    résultats de recherche
+  - **Non fait exprès** : `robots.txt` et `sitemap.xml` restent eux aussi masqués par
+    `_redirects` tant que le site est en mode "bientôt disponible" (le catch-all `/*` s'applique
+    à eux comme au reste). Pas un problème : ils ne servent qu'une fois le site public, pas
+    besoin d'exception dans `_redirects` avant la bascule finale
+- **État général au 2026-09-02** : titre + description uniques par page, HTML sémantique
+  (header/nav/main/section/footer), site responsive (mobile-friendly), favicon, alt text sur les
+  images informatives. Pas fait et pas jugé nécessaire pour l'instant vu la taille du site :
+  données structurées (schema.org/JSON-LD, ex. balisage "Organization" ou "NGO") — apporterait
+  un bénéfice marginal pour une association locale, à reconsidérer seulement si Nicole/Gérald
+  veulent viser des résultats enrichis Google plus tard
 
 ## Principes de design — éviter le rendu "généré par IA"
 
