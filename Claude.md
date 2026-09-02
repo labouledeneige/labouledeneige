@@ -465,6 +465,36 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
   `.form-field textarea` dans `css/style.css`. À garder en tête pour toute future couleur de fond
   très claire : vérifier le contraste des champs de formulaire, pas seulement le texte
 
+## SEO et partage sur les réseaux
+
+- **2026-08-30** : balises Open Graph et Twitter Card ajoutées sur les 19 pages du site
+  (`og:title`, `og:description`, `og:image` → `assets/img/logo.png`, `og:url`, `og:type`,
+  `og:site_name`, `og:locale` par langue) pour un aperçu correct (logo, titre, description) au
+  lieu d'un lien nu quand l'URL est partagée sur WhatsApp ou les réseaux. Chaque page réutilise
+  son propre `<title>`/`<meta name="description">` déjà en place, pas de texte dupliqué à
+  maintenir séparément
+- **2026-09-02** : avant la mise en ligne publique, ajout de trois éléments SEO qui manquaient
+  encore :
+  - `robots.txt` (autorise tout, référence le sitemap) et `sitemap.xml` (18 URL, les 6 pages ×
+    fr/en/de) à la racine du site
+  - `<link rel="canonical">` sur chaque page (pointe vers elle-même), pour éviter toute ambiguïté
+    si jamais une page était accessible par plusieurs URL
+  - `<link rel="alternate" hreflang="...">` (fr/en/de + x-default vers la version française) sur
+    les 18 pages : indique explicitement à Google que les versions fr/en/de sont des traductions
+    d'un même contenu plutôt que des pages distinctes, pour éviter tout souci de "contenu
+    dupliqué" et bien orienter chaque utilisateur vers la version dans sa langue depuis les
+    résultats de recherche
+  - **Non fait exprès** : `robots.txt` et `sitemap.xml` restent eux aussi masqués par
+    `_redirects` tant que le site est en mode "bientôt disponible" (le catch-all `/*` s'applique
+    à eux comme au reste). Pas un problème : ils ne servent qu'une fois le site public, pas
+    besoin d'exception dans `_redirects` avant la bascule finale
+- **État général au 2026-09-02** : titre + description uniques par page, HTML sémantique
+  (header/nav/main/section/footer), site responsive (mobile-friendly), favicon, alt text sur les
+  images informatives. Pas fait et pas jugé nécessaire pour l'instant vu la taille du site :
+  données structurées (schema.org/JSON-LD, ex. balisage "Organization" ou "NGO") — apporterait
+  un bénéfice marginal pour une association locale, à reconsidérer seulement si Nicole/Gérald
+  veulent viser des résultats enrichis Google plus tard
+
 ## Principes de design — éviter le rendu "généré par IA"
 
 Le piège classique d'un site généré avec un assistant IA : gradients violet/bleu par défaut,
