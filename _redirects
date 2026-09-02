@@ -1,9 +1,8 @@
-# Mode "site en construction" : tout le site renvoie vers la page d'attente,
-# sauf les fichiers CSS/JS/images dont cette page a besoin pour s'afficher.
-# Pour repasser sur le vrai site une fois prêt : supprimer (ou commenter)
-# la toute dernière ligne de ce fichier, rien d'autre à changer.
+# Site en ligne depuis le 2026-09-02. Mode "bientôt disponible" désactivé
+# (dernière ligne commentée ci-dessous). Pour remettre le site en
+# maintenance : décommenter cette dernière ligne, rien d'autre à changer.
 
 /css/*     /css/:splat     200
 /js/*      /js/:splat      200
 /assets/*  /assets/:splat  200
-/*         /bientot-disponible.html  200!
+# /*       /bientot-disponible.html  200!
