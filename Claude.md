@@ -166,12 +166,13 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
      - Texte 2023 : reformulé selon le texte exact fourni par Nicole/Gérald, qui ajoute une
        précision importante absente jusque-là ("...grâce à leur courage, malgré l'insécurité qui
        règne à Kompienga"), répercuté sur les traductions en/de
-     - Question en suspens (pas une correction de code) : Nicole signale "il manque l'onglet
-       Notre histoire". C'est un choix assumé depuis le 2026-08-10 (page volontairement hors du
-       nav principal, accessible via le lien en bas de la frise "Les grandes étapes" sur
-       l'accueil), pas un oubli technique. À clarifier avec eux : soit ils n'ont pas vu ce lien,
-       soit ils souhaitent malgré tout un accès direct depuis le menu — décision à prendre
-       ensemble avant de coder quoi que ce soit ici
+     - ~~Question en suspens : "il manque l'onglet Notre histoire"~~ **Résolu le 2026-09-02** :
+       Nicole/Gérald ont confirmé vouloir un accès direct depuis le menu malgré tout. Lien
+       "Notre histoire" ajouté au menu principal (juste après "L'association", avant
+       "Newsletter" — thématiquement un prolongement de la présentation de l'association) sur
+       les 18 pages du site (6 pages × fr/en/de), plus dans le pied de page de chaque page. Sur
+       `histoire.html` elle-même, le lien du pied de page est omis (même logique que
+       "L'association" absent du pied de page de `index.html` : pas de lien vers soi-même)
    - **Nouveau passage sur le lien d'aperçu, même jour** : deux photos supplémentaires touchées
      par le même problème que 2010 malgré le premier correctif `position: top` : 2025
      (Maraîchage, tête totalement coupée cette fois, pas juste rognée) et 2024 (tête bien
@@ -259,6 +260,12 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
      première page du nouveau PDF (petit script Python à une ligne, PyMuPDF déjà utilisé ailleurs
      dans ce projet pour la manipulation de PDF) — étape manuelle en plus du dépôt de fichier +
      ligne dans `js/newsletters.js`, mais reste un geste de quelques secondes pour 2-3 envois/an
+   - **2026-09-02** : première mise à jour concrète de ce processus manuel. Nicole/Gérald ont
+     corrigé une phrase en première page (`newsletter-2026-09.pdf` remplacé, même nom de
+     fichier). Ancien fichier déplacé par Adrien vers `../La Boule de Neige - documents
+     internes/Newsletters (anciennes versions)/newsletter-2026-09-old.pdf` plutôt que laissé
+     dans les fichiers publics du site. Aperçu régénéré (`assets/img/newsletter-apercu.jpg`),
+     rien à changer côté `js/newsletters.js` puisque le nom de fichier n'a pas changé
 3. **Page rapports annuels** — rapports PDF fournis par le client, organisés par année
    - Grille de "cartes-année", du plus récent au plus ancien
    - Chaque carte = année en évidence + éventuellement vignette PDF + lien qui ouvre le PDF dans un nouvel onglet
