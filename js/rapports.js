@@ -33,7 +33,8 @@ var rapports = [
 var rapportsLabelTextes = {
   fr: 'Rapport annuel (PDF)',
   en: 'Annual report (PDF)',
-  de: 'Jahresbericht (PDF)'
+  de: 'Jahresbericht (PDF)',
+  es: 'Informe anual (PDF)'
 };
 
 document.addEventListener('DOMContentLoaded', function () {

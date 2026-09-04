@@ -25,7 +25,8 @@ var histoirePhotos = {
 var histoireCarouselTextes = {
   fr: { placeholder: 'Photo à venir', prev: 'Photo précédente', next: 'Photo suivante' },
   en: { placeholder: 'Photo coming soon', prev: 'Previous photo', next: 'Next photo' },
-  de: { placeholder: 'Foto folgt', prev: 'Vorheriges Foto', next: 'Nächstes Foto' }
+  de: { placeholder: 'Foto folgt', prev: 'Vorheriges Foto', next: 'Nächstes Foto' },
+  es: { placeholder: 'Foto próximamente', prev: 'Foto anterior', next: 'Foto siguiente' }
 };
 
 function texteCarousel() {

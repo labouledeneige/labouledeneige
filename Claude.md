@@ -1,6 +1,31 @@
 # Projet : Site web association La Boule de Neige
 
-## Multilingue (fr/en/de)
+## Multilingue (fr/en/de/es)
+
+- **2026-09-04** : Adrien a demandé une version espagnole du site, après la mise en ligne
+  publique. Même principe que en/de : sous-dossier `es/` reproduisant les 6 pages, traduction
+  directe par Claude (même avertissement que pour en/de : pas certifiée, à faire relire par un
+  locuteur natif). Faite en une seule fois plutôt qu'en deux phases (contrairement à en/de à
+  l'origine) : toute l'infrastructure de traduction (dictionnaires `fr/en/de` dans les scripts
+  partagés, gabarit de page avec OG/canonical/hreflang) était déjà en place et il suffisait d'y
+  ajouter une clé `es` partout, donc pas de raison de fractionner le travail cette fois
+  - Registre espagnol neutre/Espagne (`es_ES` en `og:locale`), pas de variante latino-américaine
+    spécifique demandée
+  - Même règle que en/de pour les noms de lieux : les villes/villages du Burkina Faso restent
+    tels quels (Ouagadougou, Kompienga, Fada N'Gourma, Mahadaga, etc.), pas d'exonyme espagnol.
+    Seules les villes suisses/européennes bien connues sont traduites (Genève → Ginebra, comme
+    Genève → Geneva en anglais et → Genf en allemand)
+  - Les 18 pages fr/en/de existantes mises à jour : 4e lien `ES` ajouté au sélecteur de langue,
+    et `<link rel="alternate" hreflang="es">` ajouté dans le `<head>` de chacune. `sitemap.xml`
+    reconstruit avec les 24 URL (6 pages × 4 langues) et leurs 5 alternates hreflang chacune
+    (fr/en/de/es/x-default)
+  - Dictionnaires `es` ajoutés dans les 5 scripts partagés qui en avaient besoin :
+    `photos-accueil.js` (texte alt), `histoire-carousel.js` (placeholder/flèches),
+    `grandes-etapes.js` (flèches), `rapports.js` (libellé de carte), `newsletters.js` (noms de
+    mois + libellé). Testé : sélecteur de langue FR↔ES, bascule "voir plus"/"ver más", grilles
+    rapports/newsletters, carrousels histoire.html — tout fonctionne comme en/de
+
+## Multilingue (fr/en/de) — historique de la mise en place initiale
 
 - **2026-08-27** : Adrien a demandé une version anglaise et allemande du site. Décision : Claude
   traduit directement (pas de traducteur professionnel côté client pour l'instant), **mais ces

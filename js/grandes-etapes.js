@@ -46,7 +46,8 @@ var grandesEtapesPhotos = [
 var grandesEtapesTextes = {
   fr: { prev: 'Photo précédente', next: 'Photo suivante' },
   en: { prev: 'Previous photo', next: 'Next photo' },
-  de: { prev: 'Vorheriges Foto', next: 'Nächstes Foto' }
+  de: { prev: 'Vorheriges Foto', next: 'Nächstes Foto' },
+  es: { prev: 'Foto anterior', next: 'Foto siguiente' }
 };
 
 function creerFlecheEtapes(direction, label) {

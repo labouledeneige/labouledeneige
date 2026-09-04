@@ -88,7 +88,8 @@ function legendeDepuisNomFichier(nomFichier) {
 var photosAccueilAlt = {
   fr: 'Photo du terrain, Burkina Faso',
   en: 'Photo from the field, Burkina Faso',
-  de: 'Foto vor Ort, Burkina Faso'
+  de: 'Foto vor Ort, Burkina Faso',
+  es: 'Foto del terreno, Burkina Faso'
 };
 
 document.addEventListener('DOMContentLoaded', function () {

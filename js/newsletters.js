@@ -9,13 +9,15 @@ var newsletters = [
 var moisTextes = {
   fr: ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'],
   en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-  de: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember']
+  de: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+  es: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
 };
 
 var newslettersLabelTextes = {
   fr: 'Newsletter (PDF)',
   en: 'Newsletter (PDF)',
-  de: 'Newsletter (PDF)'
+  de: 'Newsletter (PDF)',
+  es: 'Newsletter (PDF)'
 };
 
 document.addEventListener('DOMContentLoaded', function () {
