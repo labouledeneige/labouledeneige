@@ -520,6 +520,66 @@ Coordonnées officielles de l'association (confirmées via le rapport annuel 202
   un bénéfice marginal pour une association locale, à reconsidérer seulement si Nicole/Gérald
   veulent viser des résultats enrichis Google plus tard
 
+## Hébergement : panne de crédits Netlify (2026-09-04)
+
+- **Contexte** : le site est en ligne depuis le 2026-09-02 (voir "Page d'attente" plus bas).
+  Nicole/Gérald ont commencé à partager le lien activement le 2026-09-04. Le même jour, en
+  voulant vérifier le déploiement de la version espagnole, découverte que Netlify a changé son
+  modèle de facturation vers un système de crédits mensuels, et que le compte (plan gratuit,
+  300 crédits/mois) les avait tous épuisés
+- **Diagnostic** : Netlify → Deploys montrait le déploiement de la version espagnole marqué
+  "Skipped due to account credit usage exceeded", avec un bandeau "Production deploys are
+  paused because your team has used all of its available credits for this billing cycle".
+  Détail dans Usage & billing : **285 crédits sur 300 consommés par les déploiements de
+  production à eux seuls (19 déploiements, ~15 crédits chacun)**, le reste par la bande passante
+  (37,6) et les requêtes web (2,7, sur 13'569 requêtes — donc pas un problème de trafic
+  visiteurs). Cycle de facturation en cours : 19 août → 18 septembre 2026, renouvellement
+  automatique le 19 septembre
+- **Cause réelle** : pas un pic de trafic ni un abus, mais le rythme très intense de
+  développement de ces derniers jours (chaque `git push` déclenche un déploiement de production,
+  et le nouveau système Netlify facture ça cher en crédits — l'ancien système "build minutes"
+  n'avait jamais posé ce problème). Une fois le site stabilisé (mises à jour occasionnelles :
+  une newsletter 2-3 fois par an, un rapport annuel une fois par an), 300 crédits/mois
+  redeviendraient largement suffisants (~20 déploiements possibles par mois)
+- **Impact réel pour les visiteurs** : le cache CDN de Netlify continue de servir les pages déjà
+  visitées (donc le site "marchait" encore en apparence), mais toute page jamais mise en cache
+  (comme `/es/*`, jamais publiée avec succès) renvoie une erreur. Risque que ça se dégrade
+  progressivement si rien n'est fait, en particulier gênant puisque le lien est activement
+  partagé au moment de la découverte du problème
+- **Décision prise avec Adrien** : e-mail envoyé à Nicole/Gérald expliquant la situation et
+  proposant de passer sur le plan payant Netlify **Personal (9 $/mois, 1000 crédits/mois,
+  vérifié sur la page tarifs officielle)** pendant un ou deux mois, le temps que le rythme de
+  mises à jour se stabilise, puis repasser sur le plan gratuit (bien penser à faire cette
+  bascule manuellement, l'abonnement ne s'annule pas tout seul). Alternative attente gratuite
+  jusqu'au 19 septembre gardée en option si Nicole/Gérald préfèrent ne rien payer, au prix d'un
+  risque de disponibilité en attendant
+- **Alternatives à plus long terme évoquées, pas pour tout de suite** (éviter de reproduire ce
+  problème à chaque période de développement actif) :
+  - **Cloudflare Pages + Formspree** : hébergement gratuit avec un vrai palier généreux (pas de
+    système de crédits pénalisant les déploiements fréquents), fichier `_redirects` compatible
+    presque à l'identique. Nécessite de remplacer Netlify Forms (formulaire contact.html) par
+    Formspree (gratuit jusqu'à 50 envois/mois, largement suffisant) puisque Netlify Forms est
+    propre à Netlify. Trois fournisseurs à gérer au total (Infomaniak domaine/mail + Cloudflare
+    hébergement + Formspree contact)
+  - **Hébergement direct chez Infomaniak** : puisque le domaine et la messagerie y sont déjà.
+    Environ 6-7 €/mois (vérifié via recherche web, tarifs officiels), un seul fournisseur à
+    gérer au lieu de deux ou trois, pas de système de crédits (bande passante illimitée, prix
+    fixe). Contrepartie : perd l'auto-déploiement depuis GitHub (upload manuel des fichiers par
+    FTP/SFTP, ex. FileZilla, sauf automatisation supplémentaire à construire plus tard). Le
+    formulaire de contact serait remplacé par un script PHP natif (Infomaniak supporte PHP/
+    MySQL/FTP/SSH), envoyé via le compte `contact@labouledeneige.ch` déjà authentifié plutôt
+    qu'un envoi brut depuis le serveur, pour éviter de reproduire le problème de délivrabilité
+    déjà rencontré avec Brevo (DKIM/DMARC). Le fichier `_redirects` (spécifique Netlify)
+    devrait être réécrit en `.htaccess`. Migration sans coupure possible : tout préparer et
+    tester sur une adresse temporaire Infomaniak avant de basculer le DNS en dernier, même
+    logique que la branche d'aperçu utilisée avant le lancement public
+  - **Aucun impact sur Brevo dans tous les cas** : le formulaire newsletter poste directement
+    depuis le navigateur vers l'API externe de Brevo, indépendamment de qui héberge le site.
+    L'authentification DKIM/domaine déjà en place resterait valable telle quelle après
+    n'importe laquelle de ces migrations
+- **Décision finale** : en attente de la réponse de Nicole/Gérald à l'e-mail. Rien d'implémenté
+  pour l'instant côté alternatives (Cloudflare/Infomaniak), gardé en options documentées ici
+
 ## Principes de design — éviter le rendu "généré par IA"
 
 Le piège classique d'un site généré avec un assistant IA : gradients violet/bleu par défaut,
