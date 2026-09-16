@@ -80,12 +80,26 @@ document.addEventListener('DOMContentLoaded', function () {
   var annee = document.createElement('span');
   annee.className = 'etapes-carousel-annee';
 
+  function urlPhoto(i) {
+    return '/assets/img/grandes-etapes/' + grandesEtapesPhotos[i].fichier;
+  }
+
+  // Précharge la photo suivante et précédente pour qu'un clic sur une
+  // flèche affiche la photo immédiatement (déjà en cache navigateur) plutôt
+  // que d'attendre son téléchargement à ce moment-là.
+  function precharger(i) {
+    var image = new Image();
+    image.src = urlPhoto(i);
+  }
+
   function afficher() {
     var photo = grandesEtapesPhotos[index];
-    img.src = '/assets/img/grandes-etapes/' + photo.fichier;
+    img.src = urlPhoto(index);
     img.style.objectPosition = photo.position ? photo.position : 'center';
     img.style.objectFit = photo.fit ? photo.fit : 'cover';
     annee.textContent = photo.annee;
+    precharger((index + 1) % grandesEtapesPhotos.length);
+    precharger((index - 1 + grandesEtapesPhotos.length) % grandesEtapesPhotos.length);
   }
   afficher();
 

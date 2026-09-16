@@ -62,8 +62,24 @@ function rendreCarousel(container, photos) {
   img.className = 'carousel-img';
   img.alt = '';
 
+  function urlPhoto(i) {
+    return '/assets/img/histoire/' + photos[i];
+  }
+
+  // Précharge la photo suivante et précédente pour qu'un clic sur une
+  // flèche affiche la photo immédiatement (déjà en cache navigateur) plutôt
+  // que d'attendre son téléchargement à ce moment-là.
+  function precharger(i) {
+    var image = new Image();
+    image.src = urlPhoto(i);
+  }
+
   function afficher() {
-    img.src = '/assets/img/histoire/' + photos[index];
+    img.src = urlPhoto(index);
+    if (photos.length > 1) {
+      precharger((index + 1) % photos.length);
+      precharger((index - 1 + photos.length) % photos.length);
+    }
   }
   afficher();
 
