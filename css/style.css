@@ -740,36 +740,190 @@ section {
   color: var(--color-accent-cold);
 }
 
-/* ---------- Carrousel "Les grandes étapes" (page d'accueil) ---------- */
+/* ---------- Galerie "Les grandes étapes" (page d'accueil) ----------
+   Bande de photos en scroll-snap, une année à la fois au centre, avec
+   lightbox pour voir la photo entière. Remplace l'ancien carrousel
+   simple (une photo + 2 flèches). Structure générée par js/grandes-
+   etapes.js à partir du tableau grandesEtapesPhotos ; ce bloc ne gère
+   que l'apparence. Voir Claude.md pour l'historique. */
 
-.etapes-carousel {
-  position: relative;
-  max-width: 32rem;
+.filmstrip {
+  --fs-placeholder: var(--color-bg-alt);
+  --fs-radius: 4px;
+  --fs-gap: 1rem;
+  --fs-slide: 76%; /* largeur de la photo centrale */
   margin: var(--space-4) 0 0;
 }
 
-.etapes-carousel-img {
-  width: 100%;
-  height: 22rem;
-  object-fit: cover;
-  border-radius: 4px;
-  display: block;
-  /* Visible seulement pour les photos en object-fit: contain (ex. 2010, format
-     carré recadré serré en cover) : comble les bandes vides sans couleur criarde */
-  background: var(--color-bg-alt);
+.fs-viewport {
+  position: relative;
+  container-type: inline-size;
 }
 
-.etapes-carousel-annee {
-  position: absolute;
-  bottom: var(--space-2);
-  left: var(--space-2);
-  background: rgba(36, 40, 43, 0.75);
-  color: #FFFFFF;
+.fs-track {
+  position: relative;
+  display: flex;
+  gap: var(--fs-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.fs-track::-webkit-scrollbar { display: none; }
+
+/* Espaceurs : permettent de centrer la première et la dernière photo */
+.fs-track::before,
+.fs-track::after {
+  content: "";
+  flex: 0 0 calc((100% - var(--fs-slide)) / 2 - var(--fs-gap));
+}
+
+.fs-slide {
+  flex: 0 0 var(--fs-slide);
+  scroll-snap-align: center;
+  margin: 0;
+  opacity: .45;
+  transition: opacity .3s ease;
+}
+.fs-slide.is-active { opacity: 1; }
+.fs-slide figure { margin: 0; }
+
+.fs-photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  padding: 0;
+  border: 0;
+  border-radius: var(--fs-radius);
+  overflow: hidden;
+  background: var(--fs-placeholder);
+  cursor: pointer;
+}
+.fs-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.fs-slide.is-active .fs-photo { cursor: zoom-in; }
+
+.fs-slide figcaption {
+  margin-top: .75rem;
+  line-height: 1.4;
+}
+.fs-year {
+  display: block;
   font-family: var(--font-heading);
   font-weight: 600;
   font-size: 1.1rem;
-  padding: 0.25rem 0.75rem;
-  border-radius: 4px;
+}
+.fs-text { color: var(--color-text-muted); }
+
+/* ---- Flèches (centrées verticalement sur la photo) ---- */
+.fs-arrow {
+  position: absolute;
+  top: calc(var(--fs-slide-cq, 76cqw) / 3); /* = moitié de la hauteur de la photo (ratio 3:2) */
+  translate: 0 -50%;
+  z-index: 2;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 0;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--color-text);
+  font-size: 1.5rem;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(36, 40, 43, 0.2);
+  transition: opacity .2s, background .15s, color .15s;
+}
+.fs-arrow:hover { background: #FFFFFF; color: var(--color-accent-warm); }
+.fs-arrow[disabled] { opacity: 0; pointer-events: none; }
+.fs-prev { left: .75rem; }
+.fs-next { right: .75rem; }
+
+.fs-counter {
+  margin: 1rem 0 0;
+  text-align: center;
+  font-size: .9rem;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.filmstrip :focus-visible {
+  outline: 2px solid var(--color-accent-green);
+  outline-offset: 3px;
+}
+
+/* ---- Lightbox (<dialog> natif) ---- */
+.fs-lightbox {
+  width: min(1000px, 94vw);
+  max-width: none;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+.fs-lightbox::backdrop { background: rgba(18, 20, 10, .82); }
+.fs-lb-inner { position: relative; padding: 1rem; }
+.fs-lb-inner img {
+  display: block;
+  width: 100%;
+  max-height: 75vh;
+  object-fit: contain;
+  border-radius: var(--fs-radius);
+  background: #000;
+}
+.fs-lb-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: .8rem;
+}
+.fs-lb-caption { margin: 0; line-height: 1.4; }
+.fs-lb-caption strong { font-family: var(--font-heading); }
+.fs-lb-nav { display: flex; gap: .5rem; flex-shrink: 0; }
+.fs-lb-nav button,
+.fs-lb-close {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-alt);
+  color: var(--color-text);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.fs-lb-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  border: 0;
+  background: rgba(0, 0, 0, .6);
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .filmstrip { --fs-slide: 86%; --fs-gap: .6rem; --fs-slide-cq: 86cqw; }
+  .fs-arrow { width: 2.2rem; height: 2.2rem; font-size: 1.3rem; }
+  .fs-prev { left: .25rem; }
+  .fs-next { right: .25rem; }
+  .fs-lb-inner { padding: .6rem; }
+  .fs-lb-close { top: 1rem; right: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fs-slide, .fs-arrow { transition: none; }
 }
 
 /* Aperçu (première page) de la dernière newsletter envoyée, sur newsletter.html.
